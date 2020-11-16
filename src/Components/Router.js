@@ -1,8 +1,10 @@
 import HomePage from "./HomePage.js";
 import ErrorPage from "./ErrorPage.js";
+import MapPage from "./MapPage.js";
 
 const routes = {
   "/": HomePage,
+  "/map": MapPage,
 };
 
 let navBar = document.querySelector("#navBar");

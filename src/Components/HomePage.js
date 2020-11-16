@@ -1,6 +1,5 @@
 import { setLayout } from "../utils/render.js";
-let homePage = `<p>Salut</p>
-`;
+let homePage = `<p>Salut</p>`;
 
 const HomePage = async () => {
   setLayout("Home");
