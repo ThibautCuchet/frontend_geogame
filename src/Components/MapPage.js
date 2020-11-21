@@ -1,4 +1,3 @@
-import { setLayout } from "../utils/render.js";
 const L = require("leaflet");
 const data = require("../country.json");
 import "../../node_modules/leaflet/dist/leaflet.css";
@@ -6,8 +5,7 @@ import "../../node_modules/leaflet/dist/leaflet.css";
 let mapPage = `<div id="mapid"></div>`;
 
 const MapPage = async () => {
-  setLayout("Home");
-  let page = document.querySelector("#page");
+  let page = document.querySelector("#main");
   page.innerHTML = mapPage;
 
   loadMap();
