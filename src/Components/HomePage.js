@@ -23,8 +23,8 @@ const worldParts = [
     img: "map",
   },
   {
-    id: "afriqua",
-    name: "Afriqua",
+    id: "africa",
+    name: "Africa",
     img: "map",
   },
   {
@@ -34,11 +34,34 @@ const worldParts = [
   },
 ];
 
+const gamemodes = [
+  {
+    id: "country",
+    name: "Countries",
+    difficulty: "Easy",
+  },
+  {
+    id: "flag",
+    name: "Flags",
+    difficulty: "Medium",
+  },
+  {
+    id: "capital",
+    name: "Capitals",
+    difficulty: "Medium",
+  },
+  {
+    id: "iso",
+    name: "ISO",
+    difficulty: "Hard",
+  },
+];
+let page = document.querySelector("#main");
+
 const HomePage = async () => {
   setTitle("Home");
-  let page = document.querySelector("#main");
-  page.append(WelcomeMessage());
-  page.append(WorldSelection());
+  WelcomeMessage();
+  WorldSelection();
 };
 
 const WelcomeMessage = () => {
@@ -46,7 +69,7 @@ const WelcomeMessage = () => {
   element.innerText = `Hey hi to you young adventurer, are you thirsty for knowledge and adventure? This game is now made for you! Here you can test your knowledge of geography and win as many points as possible. Do you know more about the countries of a certain continent? No worries, we offer you several game mode categories, you can also compare your points with those of your friends! Do not hesitate and go on an adventure! ENJOY;)`;
   element.style.width = "50%";
   element.style.textAlign = "center";
-  return element;
+  page.append(element);
 };
 
 const WorldSelection = () => {
@@ -61,12 +84,46 @@ const WorldSelection = () => {
     <div class="world-title">${part.name}</div>`;
     element.append(worldPart);
 
-    worldPart.addEventListener("click", () =>
-      RedirectUrl("/map", { map: part.id })
-    );
+    worldPart.addEventListener("click", GamemodeSelection);
   });
 
-  return element;
+  page.append(element);
+};
+
+const GamemodeSelection = () => {
+  const element = document.createElement("div");
+  element.className = "popup";
+  element.innerHTML = `<div class="popup-content">
+    <div class="popup-title">Select gamemodes</div>  
+    <div class="popup-selection"></div> 
+  </div>`;
+
+  gamemodes.forEach((mode) => {
+    const modeDiv = document.createElement("div");
+    modeDiv.className = "popup-boxes";
+    modeDiv.innerHTML = `<div>${mode.name}</div>
+    <div>Description</div>
+    <div class="popup-difficulty">${mode.difficulty}</div>`;
+    modeDiv.querySelector(".popup-difficulty").style.background = gameColor(
+      mode.difficulty
+    );
+
+    element.querySelector(".popup-selection").append(modeDiv);
+  });
+
+  element
+    .querySelector(".popup-content")
+    .addEventListener("click", (e) => e.stopPropagation());
+
+  element.addEventListener("click", () => element.remove());
+
+  page.append(element);
+};
+
+const gameColor = (difficulty) => {
+  if (difficulty === "Easy") return "rgba(0, 200, 0, 0.8)";
+  if (difficulty === "Medium") return "rgba(250, 150, 0, 0.8)";
+  if (difficulty === "Hard") return "rgba(250, 0, 0, 0.8)";
 };
 
 export default HomePage;
