@@ -1,6 +1,8 @@
-export const setImage = (src, id) => {
+export const setImage = (src, id, style = {}) => {
   const img = new Image();
   img.src = src;
+  img.style = style;
+  console.log(style, img.style);
   document.getElementById(id).append(img);
 };
 
