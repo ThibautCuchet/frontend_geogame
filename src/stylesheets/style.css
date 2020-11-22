@@ -1,6 +1,25 @@
+@import url(//db.onlinewebfonts.com/c/61208c0ebb712f74e770dd3119d8955a?family=SF+Arch+Rival);
+
+@font-face {
+  font-family: "SF Arch Rival";
+  src: url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.eot");
+  src: url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.svg#SF Arch Rival")
+      format("svg");
+}
+
 * {
   margin: 0;
   padding: 0;
+  font-family: BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 body {
@@ -20,7 +39,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background: #594b32;
+  background: #333333;
 }
 
 .flex-around {
@@ -39,8 +58,9 @@ body {
 
 .world-title {
   text-align: center;
-  background: #594b32;
+  background: #333333;
   height: 2em;
+  color: white;
 }
 
 .popup {
@@ -59,7 +79,7 @@ body {
   width: 33%;
   height: 60%;
   border-radius: 10px;
-  background: #a2a28b;
+  background: #cac9c7;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -70,8 +90,9 @@ body {
 .popup-title {
   flex: 0 3em;
   width: 100%;
-  background: #594b32;
+  background: #333333;
   text-align: center;
+  color: white;
 }
 
 .popup-selection {
@@ -91,8 +112,8 @@ body {
   align-items: center;
   flex-direction: column;
   border-radius: 25px;
-  border: black 1px solid;
-  background: rgba(255, 255, 255, 0.2);
+  border: #333333 1px solid;
+  box-shadow: #333333 5px 5px 5px;
   overflow: hidden;
 }
 
@@ -103,7 +124,7 @@ body {
 
 #main {
   flex: 1;
-  background: #a2a28b;
+  background: #cac9c7;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -117,4 +138,5 @@ body {
 #mapid {
   flex: 1;
   width: 100%;
+  background: #6facaa;
 }

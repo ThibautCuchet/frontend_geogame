@@ -25,7 +25,7 @@ function loadMap() {
       color: "#A2A28B",
       fillOpacity: 1,
       weight: 1,
-      fillColor: "#808067",
+      fillColor: "#e0cda9",
     },
   }).addTo(mymap);
 }

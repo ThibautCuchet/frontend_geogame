@@ -5,32 +5,32 @@ const worldParts = [
   {
     id: "world",
     name: "World",
-    img: "map",
+    img: "map.jpg",
   },
   {
     id: "europe",
     name: "Europe",
-    img: "map",
+    img: "map.jpg",
   },
   {
     id: "america",
     name: "America",
-    img: "map",
+    img: "map.jpg",
   },
   {
     id: "asia",
     name: "Asia",
-    img: "map",
+    img: "map.jpg",
   },
   {
     id: "africa",
     name: "Africa",
-    img: "map",
+    img: "map.jpg",
   },
   {
     id: "oceania",
     name: "Oceania",
-    img: "map",
+    img: "map.jpg",
   },
 ];
 
@@ -80,7 +80,7 @@ const WorldSelection = () => {
   worldParts.forEach((part) => {
     const worldPart = document.createElement("div");
     worldPart.className = "world-part";
-    worldPart.innerHTML = `<img src=${require(`../images/${part.img}.jpg`)} style="width: 100%">
+    worldPart.innerHTML = `<img src=${require(`../images/${part.img}`)} style="width: 100%">
     <div class="world-title">${part.name}</div>`;
     element.append(worldPart);
 
