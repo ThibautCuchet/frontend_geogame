@@ -10,7 +10,7 @@ const worldParts = [
   {
     id: "europe",
     name: "EUROPE",
-    img: "europa.jpg",
+    img: "europe.jpg",
   },
   {
     id: "america",
@@ -20,7 +20,7 @@ const worldParts = [
   {
     id: "asia",
     name: "ASIA",
-    img: "asie.jpg",
+    img: "asia.jpg",
   },
   {
     id: "africa",
