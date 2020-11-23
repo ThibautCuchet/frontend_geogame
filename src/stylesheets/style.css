@@ -54,6 +54,12 @@ body {
   border-radius: 5px;
   cursor: pointer;
   overflow: hidden;
+  box-shadow: gray 5px 5px 5px;
+}
+
+.world-part:hover {
+  transform: scale(1.05);
+  box-shadow: gray 7px 7px 7px;
 }
 
 .world-title {
@@ -120,6 +126,7 @@ body {
 .popup-difficulty {
   width: 100%;
   text-align: center;
+  color: white;
 }
 
 #main {

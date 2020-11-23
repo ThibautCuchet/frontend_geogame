@@ -13,14 +13,14 @@ const worldParts = [
     img: "europe.jpg",
   },
   {
-    id: "america",
-    name: "AMERICA",
-    img: "america.jpg",
-  },
-  {
     id: "asia",
     name: "ASIA",
     img: "asia.jpg",
+  },
+  {
+    id: "america",
+    name: "AMERICA",
+    img: "america.jpg",
   },
   {
     id: "africa",
@@ -101,7 +101,7 @@ const GamemodeSelection = () => {
   const element = document.createElement("div");
   element.className = "popup";
   element.innerHTML = `<div class="popup-content">
-    <div class="popup-title"><strong>SELECT A GAMEMODE</strong></div>  
+    <div class="popup-title" style="display: flex; justify-content: center; align-items: center;"><strong>SELECT A GAMEMODE</strong></div>  
     <div class="popup-selection"></div> 
   </div>`;
 
@@ -125,6 +125,30 @@ const GamemodeSelection = () => {
   element.addEventListener("click", () => element.remove());
 
   page.append(element);
+
+  element.animate(
+    [
+      {
+        opacity: 0,
+      },
+      {
+        opacity: 1,
+      },
+    ],
+    100
+  );
+
+  element.querySelector(".popup-content").animate(
+    [
+      {
+        transform: "scale(0)",
+      },
+      {
+        transform: "scale(1)",
+      },
+    ],
+    200
+  );
 };
 
 const gameColor = (difficulty) => {
