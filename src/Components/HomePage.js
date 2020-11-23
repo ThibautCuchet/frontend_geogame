@@ -4,33 +4,33 @@ import { RedirectUrl } from "./Router.js";
 const worldParts = [
   {
     id: "world",
-    name: "World",
+    name: "WORLD",
     img: "map.jpg",
   },
   {
     id: "europe",
-    name: "Europe",
-    img: "map.jpg",
+    name: "EUROPE",
+    img: "europa.jpg",
   },
   {
     id: "america",
-    name: "America",
-    img: "map.jpg",
+    name: "AMERICA",
+    img: "america.jpg",
   },
   {
     id: "asia",
-    name: "Asia",
-    img: "map.jpg",
+    name: "ASIA",
+    img: "asie.jpg",
   },
   {
     id: "africa",
-    name: "Africa",
-    img: "map.jpg",
+    name: "AFRICA",
+    img: "africa.jpg",
   },
   {
     id: "oceania",
-    name: "Oceania",
-    img: "map.jpg",
+    name: "OCEANIA",
+    img: "oceania.jpg",
   },
 ];
 
@@ -39,21 +39,25 @@ const gamemodes = [
     id: "country",
     name: "Countries",
     difficulty: "Easy",
+    description: "Try to find the countries on the map!",
   },
   {
     id: "flag",
     name: "Flags",
     difficulty: "Medium",
+    description: "Try to find the flags on the map!",
   },
   {
     id: "capital",
     name: "Capitals",
     difficulty: "Medium",
+    description: "Try to find the capitals on the map!",
   },
   {
     id: "iso",
     name: "ISO",
     difficulty: "Hard",
+    description: "Try to find the ISO codes on the map!",
   },
 ];
 let page = document.querySelector("#main");
@@ -66,7 +70,10 @@ const HomePage = async () => {
 
 const WelcomeMessage = () => {
   const element = document.createElement("p");
-  element.innerText = `Hey hi to you young adventurer, are you thirsty for knowledge and adventure? This game is now made for you! Here you can test your knowledge of geography and win as many points as possible. Do you know more about the countries of a certain continent? No worries, we offer you several game mode categories, you can also compare your points with those of your friends! Do not hesitate and go on an adventure! ENJOY;)`;
+  element.innerHTML = `<h1>Welcome young adventurer</h1> Are you thirsty for knowledge and adventure? 
+  This game is now made for you! Here you can test your knowledge of geography and win as many points as possible. 
+  Do you know more about the countries of a certain continent? No worries, we offer you several game mode categories, 
+  you can also compare your points with those of your friends! Do not hesitate and go on an adventure! ENJOY;)`;
   element.style.width = "50%";
   element.style.textAlign = "center";
   page.append(element);
@@ -81,7 +88,7 @@ const WorldSelection = () => {
     const worldPart = document.createElement("div");
     worldPart.className = "world-part";
     worldPart.innerHTML = `<img src=${require(`../images/${part.img}`)} style="width: 100%">
-    <div class="world-title">${part.name}</div>`;
+    <div class="world-title"><strong>${part.name}</div>`;
     element.append(worldPart);
 
     worldPart.addEventListener("click", GamemodeSelection);
@@ -94,7 +101,7 @@ const GamemodeSelection = () => {
   const element = document.createElement("div");
   element.className = "popup";
   element.innerHTML = `<div class="popup-content">
-    <div class="popup-title">Select gamemodes</div>  
+    <div class="popup-title"><strong>SELECT A GAMEMODE</strong></div>  
     <div class="popup-selection"></div> 
   </div>`;
 
@@ -102,7 +109,7 @@ const GamemodeSelection = () => {
     const modeDiv = document.createElement("div");
     modeDiv.className = "popup-boxes";
     modeDiv.innerHTML = `<div>${mode.name}</div>
-    <div>Description</div>
+    <div>${mode.description}</div>
     <div class="popup-difficulty">${mode.difficulty}</div>`;
     modeDiv.querySelector(".popup-difficulty").style.background = gameColor(
       mode.difficulty
