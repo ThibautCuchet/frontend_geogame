@@ -108,17 +108,17 @@ const GamemodeSelection = () => {
   gamemodes.forEach((mode) => {
     const modeDiv = document.createElement("div");
     modeDiv.className = "popup-boxes";
-    modeDiv.innerHTML = `<div class="row justify-content-end">
-    <div class="col-4">
-      ${mode.name}
-    </div>
-    <div class="col-4">
-      <div class="custom-control custom-switch">
-      <input type="checkbox" class="custom-control-input" id="customSwitch${mode.name}" name="${mode.id}">
-      <label class="custom-control-label" for="customSwitch${mode.name}"></label>
+    modeDiv.innerHTML = `<div class="row justify-content-end" style="width:100%">
+      <div class="col-4" style="text-align: center">
+        <strong>${mode.name}</strong>
+      </div>
+      <div class="col-4 justify-content-end" style="text-align: end">
+        <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="${mode.id}">
+        <label class="custom-control-label" for="${mode.id}"></label>
+        </div>
       </div>
     </div>
-  </div>
     <div>${mode.description}</div>
     <div class="popup-difficulty">${mode.difficulty}</div>`;
     modeDiv.querySelector(".popup-difficulty").style.background = gameColor(
