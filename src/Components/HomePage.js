@@ -1,3 +1,4 @@
+import { Button } from "bootstrap";
 import { setTitle } from "../utils/render.js";
 import { RedirectUrl } from "./Router.js";
 
@@ -91,13 +92,13 @@ const WorldSelection = () => {
     <div class="world-title"><strong>${part.name}</div>`;
     element.append(worldPart);
 
-    worldPart.addEventListener("click", GamemodeSelection);
+    worldPart.addEventListener("click", () => GamemodeSelection(part.id));
   });
 
   page.append(element);
 };
 
-const GamemodeSelection = () => {
+const GamemodeSelection = (mapId) => {
   const element = document.createElement("div");
   element.className = "popup";
   element.innerHTML = `<div class="popup-content">
@@ -125,8 +126,29 @@ const GamemodeSelection = () => {
       mode.difficulty
     );
 
+    modeDiv
+      .querySelector(`#${mode.id}`)
+      .addEventListener(
+        "change",
+        () => (document.querySelector("#play-button").disabled = !isSwitches())
+      );
+
     element.querySelector(".popup-selection").append(modeDiv);
   });
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "btn btn-dark";
+  btn.innerHTML = "Play";
+  btn.style.alignSelf = "flex-end";
+  btn.style.marginRight = "3em";
+  btn.style.width = "6em";
+  btn.disabled = true;
+  btn.id = "play-button";
+  btn.addEventListener("click", () =>
+    RedirectUrl("/map", { ...getSwitchSelection(), map: mapId })
+  );
+  element.querySelector(".popup-selection").append(btn);
 
   element
     .querySelector(".popup-content")
@@ -165,6 +187,19 @@ const gameColor = (difficulty) => {
   if (difficulty === "Easy") return "rgba(0, 200, 0, 0.8)";
   if (difficulty === "Medium") return "rgba(250, 150, 0, 0.8)";
   if (difficulty === "Hard") return "rgba(250, 0, 0, 0.8)";
+};
+
+const getSwitchSelection = () => {
+  let modes = {};
+  document
+    .querySelectorAll("input[type=checkbox]")
+    .forEach((item) => (modes[item.id] = item.checked));
+  return modes;
+};
+
+const isSwitches = () => {
+  let switches = getSwitchSelection();
+  return Object.keys(switches).some((item) => switches[item]);
 };
 
 export default HomePage;

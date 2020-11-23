@@ -4,7 +4,8 @@ import "../../node_modules/leaflet/dist/leaflet.css";
 
 let mapPage = `<div id="mapid"></div>`;
 
-const MapPage = async () => {
+const MapPage = async (data) => {
+  console.log("Map", data);
   let page = document.querySelector("#main");
   page.innerHTML = mapPage;
 
