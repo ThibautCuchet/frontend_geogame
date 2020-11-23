@@ -70,7 +70,7 @@ const HomePage = async () => {
 
 const WelcomeMessage = () => {
   const element = document.createElement("p");
-  element.innerHTML = `<h1>Welcome young adventurer</h1> Are you thirsty for knowledge and adventure? 
+  element.innerHTML = `<h1><strong>WELCOME YOUNG ADVENTURER</strong></h1> Are you thirsty for knowledge and adventure? 
   This game is now made for you! Here you can test your knowledge of geography and win as many points as possible. 
   Do you know more about the countries of a certain continent? No worries, we offer you several game mode categories, 
   you can also compare your points with those of your friends! Do not hesitate and go on an adventure! ENJOY;)`;
@@ -102,13 +102,16 @@ const GamemodeSelection = () => {
   element.className = "popup";
   element.innerHTML = `<div class="popup-content">
     <div class="popup-title" style="display: flex; justify-content: center; align-items: center;"><strong>SELECT A GAMEMODE</strong></div>  
-    <div class="popup-selection"></div> 
+    <div class="popup-selection"></div>
   </div>`;
 
   gamemodes.forEach((mode) => {
     const modeDiv = document.createElement("div");
     modeDiv.className = "popup-boxes";
-    modeDiv.innerHTML = `<div>${mode.name}</div>
+    modeDiv.innerHTML = `<div><strong>${mode.name}</strong></div>
+    <div class="custom-control custom-switch">
+      <input type="checkbox" class="custom-control-input" id="customSwitch${mode.name}">
+      <label class="custom-control-label" for="customSwitch${mode.name}"></label></div>
     <div>${mode.description}</div>
     <div class="popup-difficulty">${mode.difficulty}</div>`;
     modeDiv.querySelector(".popup-difficulty").style.background = gameColor(
