@@ -7,8 +7,12 @@ import { setImage } from "../utils/render.js";
 const Navbar = () => {
   //setImage(menu, "menu-hamburger");
   //setImage(portrait, "profile");
-  setImage(logo, "logo", "height: 7em; width: auto");
-  setImage(menuBurger,"menuBurger");
+  setImage(logo, "logo", "height: 10em; width: auto; margin-left: -3em");
+  setImage(
+    menuBurger,
+    "menu-hamburger",
+    "height: 2.5em; width: auto; margin-left: 3em"
+  );
 };
 
 export default Navbar;
