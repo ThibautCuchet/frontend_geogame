@@ -71,6 +71,7 @@ const HomePage = async () => {
 
 const WelcomeMessage = () => {
   const element = document.createElement("p");
+  element.className = "homeTitle";
   element.innerHTML = `<h1><strong>WELCOME YOUNG ADVENTURER</strong></h1> Are you thirsty for knowledge and adventure? 
   This game is now made for you! Here you can test your knowledge of geography and win as many points as possible. 
   Do you know more about the countries of a certain continent? No worries, we offer you several game mode categories, 

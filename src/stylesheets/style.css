@@ -147,3 +147,7 @@ body {
   width: 100%;
   background: #6facaa;
 }
+
+.homeTitle h1{
+  padding-top: 30px;
+}
