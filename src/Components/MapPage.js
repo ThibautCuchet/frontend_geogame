@@ -10,6 +10,12 @@ const MapPage = async (data) => {
   page.innerHTML = mapPage;
 
   loadMap(data);
+  setQuestionLayout();
+  let percent = 0;
+  setInterval(() => {
+    percent++;
+    setProgress(percent);
+  }, 200);
 };
 
 function loadMap(data) {
@@ -52,5 +58,26 @@ function loadMap(data) {
     },
   }).addTo(mymap);
 }
+
+const setQuestionLayout = () => {
+  document.querySelector("#logo").innerHTML = `<div class="question">
+    <div></div>
+    <div class="progress" style="height: 10px;">
+      <div class="progress-bar" id="progress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>`;
+};
+
+const setProgress = (percent) => {
+  let progress = document.querySelector("#progress");
+  progress.style.width = `${percent}%`;
+  if (percent > 90) {
+    progress.className = "progress-bar bg-danger";
+  } else if (percent > 75) {
+    progress.className = "progress-bar bg-warning";
+  } else {
+    progress.className = "progress-bar";
+  }
+};
 
 export default MapPage;

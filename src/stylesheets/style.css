@@ -42,6 +42,10 @@ body {
   background: #333333;
 }
 
+.navbar > div {
+  flex: 1;
+}
+
 .flex-around {
   display: flex;
   justify-content: space-around;
@@ -129,6 +133,17 @@ body {
   color: white;
 }
 
+.question {
+  height: 80%;
+  background: white;
+  border-radius: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 #main {
   flex: 1;
   background: #cac9c7;
@@ -142,12 +157,19 @@ body {
   cursor: pointer;
 }
 
+#logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 #mapid {
   flex: 1;
   width: 100%;
   background: #6facaa;
 }
 
-.homeTitle h1{
+.homeTitle h1 {
   padding-top: 30px;
 }

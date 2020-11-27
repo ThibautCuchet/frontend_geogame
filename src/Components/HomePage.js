@@ -63,8 +63,9 @@ const gamemodes = [
 ];
 let page = document.querySelector("#main");
 
-const HomePage = async () => {
+const HomePage = () => {
   setTitle("Home");
+  page.innerHTML = "";
   WelcomeMessage();
   WorldSelection();
 };
