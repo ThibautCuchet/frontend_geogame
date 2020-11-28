@@ -1,8 +1,12 @@
 const L = require("leaflet");
 const MAP_DATA = require("../country.json");
 import "../../node_modules/leaflet/dist/leaflet.css";
+import { TIME_BETWEEN_QUESTION, TIME_TO_ANSWER } from "../utils/config";
+import { blinkItem } from "../utils/render";
 
 let mapPage = `<div id="mapid"></div>`;
+let percent = 0;
+let questionInterval;
 
 const MapPage = async (data) => {
   console.log("Map", data);
@@ -11,11 +15,8 @@ const MapPage = async (data) => {
 
   loadMap(data);
   setQuestionLayout();
-  let percent = 0;
-  setInterval(() => {
-    percent++;
-    setProgress(percent);
-  }, 200);
+  percent = 0;
+  nextQuestion();
 };
 
 function loadMap(data) {
@@ -71,13 +72,45 @@ const setQuestionLayout = () => {
 const setProgress = (percent) => {
   let progress = document.querySelector("#progress");
   progress.style.width = `${percent}%`;
-  if (percent > 90) {
+  if (percent > 95) {
     progress.className = "progress-bar bg-danger";
   } else if (percent > 75) {
     progress.className = "progress-bar bg-warning";
   } else {
     progress.className = "progress-bar";
   }
+};
+
+const nextQuestion = () => {
+  setTimeout(() => {
+    percent = 0;
+    setProgress(percent);
+  }, TIME_BETWEEN_QUESTION / 2);
+  setTimeout(() => {
+    questionInterval = setInterval(() => {
+      if (percent >= 100) {
+        setTimeout(() => wrongAnswer(), TIME_BETWEEN_QUESTION / 3);
+        clearInterval(questionInterval);
+        nextQuestion();
+      }
+      percent++;
+      setProgress(percent);
+    }, TIME_TO_ANSWER / 100);
+  }, TIME_BETWEEN_QUESTION);
+};
+
+const successAnswer = () => {
+  blinkItem(document.querySelector(".question"), "green", {
+    duration: 500,
+    iterations: 3,
+  });
+};
+
+const wrongAnswer = () => {
+  blinkItem(document.querySelector(".question"), "red", {
+    duration: 500,
+    iterations: 3,
+  });
 };
 
 export default MapPage;

@@ -10,3 +10,19 @@ export const setImage = (src, id, style = "", callback = null) => {
 export const setTitle = (title) => {
   document.querySelector("title").innerText = title;
 };
+
+export const blinkItem = (element, blinkColor, options = {}) => {
+  const currentColor = element.style.background;
+
+  element.animate(
+    [
+      {
+        background: blinkColor,
+      },
+      {
+        background: currentColor,
+      },
+    ],
+    options
+  );
+};
