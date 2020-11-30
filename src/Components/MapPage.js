@@ -21,7 +21,7 @@ const MapPage = async (_data) => {
   setQuestionLayout();
   percent = 0;
 
-  fetch("http://localhost/api/questions/start", { method: "POST" });
+  fetch("/api/questions/start", { method: "POST" });
 
   nextQuestion();
 };
@@ -103,7 +103,7 @@ const nextQuestion = () => {
     setProgress(percent);
   }, TIME_BETWEEN_QUESTION / 2);
 
-  fetch("http://localhost/api/questions/next", {
+  fetch("/api/questions/next", {
     method: "POST",
     body: JSON.stringify({
       location: data.map,
@@ -160,7 +160,7 @@ const onCountryClick = (e) => {
   canClick = false;
   let selected = e.target.feature.properties.iso2;
   clearInterval(questionInterval);
-  fetch("http://localhost/api/questions/answer", {
+  fetch("/api/questions/answer", {
     method: "POST",
     body: JSON.stringify({ answer: selected }),
     headers: {
