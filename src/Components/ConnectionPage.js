@@ -34,7 +34,7 @@ const CreateFormConnection = () => {
     </div>
     </div>
     
-    <div style="height: 100%; width: 5px; background: black"></div>
+    <div style="width: 5px; background: #bababa"></div>
     <!-- Register Form -->
     <div style="display: flex; flex-direction: column; justify-content: space-between; flex: 1">
     <h5>USER REGISTER</h5>
