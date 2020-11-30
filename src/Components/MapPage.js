@@ -2,20 +2,20 @@ const L = require("leaflet");
 const MAP_DATA = require("../country.json");
 import "../../node_modules/leaflet/dist/leaflet.css";
 import { TIME_BETWEEN_QUESTION, TIME_TO_ANSWER } from "../utils/config";
-import { blinkItem } from "../utils/render";
+import { blinkItem, setNavSize } from "../utils/render";
 
 let mapPage = `<div id="mapid"></div>`;
 let percent = 0;
 let questionInterval;
 let data;
 let canClick = false;
+let page = document.querySelector("#main");
 
 const MapPage = async (_data) => {
   console.log("Map", data);
   data = _data;
-  let page = document.querySelector("#main");
   page.innerHTML = mapPage;
-
+  setNavSize("6em");
   loadMap(data);
   setQuestionLayout();
   percent = 0;
@@ -64,12 +64,14 @@ function loadMap(data) {
 }
 
 const setQuestionLayout = () => {
-  document.querySelector("#logo").innerHTML = `<div class="question">
-    <div></div>
-    <div class="progress" style="height: 10px;">
-      <div class="progress-bar" id="progress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
+  let element = document.createElement("div");
+  element.className = "question";
+  element.innerHTML = `<div></div>
+  <div class="progress" style="height: 10px;">
+    <div class="progress-bar" id="progress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
   </div>`;
+
+  page.append(element);
 };
 
 const setProgress = (percent) => {
@@ -112,8 +114,8 @@ const nextQuestion = () => {
         questionInterval = setInterval(() => {
           if (percent >= 100) {
             setTimeout(() => wrongAnswer(), TIME_BETWEEN_QUESTION / 3);
-
             nextQuestion();
+            clearInterval(questionInterval);
           }
           percent++;
           setProgress(percent);
@@ -146,6 +148,7 @@ const onCountryClick = (e) => {
   if (!canClick) return;
   canClick = false;
   let selected = e.target.feature.properties.iso2;
+  clearInterval(questionInterval);
   fetch("http://localhost/api/questions/answer", {
     method: "POST",
     body: JSON.stringify({ answer: selected }),
@@ -155,7 +158,7 @@ const onCountryClick = (e) => {
   })
     .then((response) => response.json())
     .then((response) => {
-      if (response) {
+      if (response.answer) {
         successAnswer();
         nextQuestion();
       } else {

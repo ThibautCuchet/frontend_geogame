@@ -1,5 +1,5 @@
 import { Button } from "bootstrap";
-import { setTitle } from "../utils/render.js";
+import { setNavSize, setTitle } from "../utils/render.js";
 import { RedirectUrl } from "./Router.js";
 
 const worldParts = [
@@ -68,6 +68,7 @@ const HomePage = () => {
   page.innerHTML = "";
   WelcomeMessage();
   WorldSelection();
+  setNavSize("10em");
 };
 
 const WelcomeMessage = () => {

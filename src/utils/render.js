@@ -26,3 +26,7 @@ export const blinkItem = (element, blinkColor, options = {}) => {
     options
   );
 };
+
+export const setNavSize = (size) => {
+  document.querySelector("#logo").querySelector("img").style.height = size;
+};

@@ -134,14 +134,18 @@ body {
 }
 
 .question {
-  height: 80%;
+  position: absolute;
+  top: 8em;
+  height: 5em;
+  left: 30%;
+  width: 40%;
   background: white;
   border-radius: 15px;
-  width: 100%;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   overflow: hidden;
+  z-index: 1;
 }
 
 #main {
@@ -165,6 +169,7 @@ body {
 }
 
 #mapid {
+  z-index: 0;
   flex: 1;
   width: 100%;
   background: #6facaa;
