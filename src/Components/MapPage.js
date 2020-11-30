@@ -21,7 +21,7 @@ const MapPage = async (_data) => {
   setQuestionLayout();
   percent = 0;
 
-  fetch("/api/questions/start", { method: "POST" });
+  fetch("/api/questions/start", { method: "GET" });
 
   nextQuestion();
 };
@@ -123,10 +123,11 @@ const nextQuestion = () => {
         document.querySelector(".question").querySelector("div").innerHTML =
           response.question;
         questionInterval = setInterval(() => {
-          if (percent >= 100) {
-            setTimeout(() => wrongAnswer(), TIME_BETWEEN_QUESTION / 3);
-            nextQuestion();
+          if (percent >= 105) {
+            canClick = false;
             clearInterval(questionInterval);
+            setTimeout(() => wrongAnswer(), TIME_BETWEEN_QUESTION / 3);
+            setTimeout(() => nextQuestion(), 1000);
           }
           percent++;
           setProgress(percent);
