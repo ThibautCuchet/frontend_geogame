@@ -3,6 +3,7 @@ const MAP_DATA = require("../country.json");
 import "../../node_modules/leaflet/dist/leaflet.css";
 import { TIME_BETWEEN_QUESTION, TIME_TO_ANSWER } from "../utils/config";
 import { blinkItem, setNavSize } from "../utils/render";
+import { RedirectUrl } from "./Router";
 
 let mapPage = `<div id="mapid"></div>`;
 let percent = 0;
@@ -12,13 +13,16 @@ let canClick = false;
 let page = document.querySelector("#main");
 
 const MapPage = async (_data) => {
-  console.log("Map", data);
+  console.log("Map", _data);
   data = _data;
   page.innerHTML = mapPage;
   setNavSize("6em");
   loadMap(data);
   setQuestionLayout();
   percent = 0;
+
+  fetch("http://localhost/api/questions/start", { method: "POST" });
+
   nextQuestion();
 };
 
@@ -64,14 +68,19 @@ function loadMap(data) {
 }
 
 const setQuestionLayout = () => {
-  let element = document.createElement("div");
-  element.className = "question";
-  element.innerHTML = `<div></div>
+  let question = document.createElement("div");
+  question.className = "question";
+  question.innerHTML = `<div style="display: flex; justify-content: center; align-items: center; flex: 1"></div>
   <div class="progress" style="height: 10px;">
     <div class="progress-bar" id="progress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
   </div>`;
 
-  page.append(element);
+  let points = document.createElement("div");
+  points.className = "points";
+  points.innerHTML = `<div id="points">0 points</div>`;
+
+  page.append(question);
+  page.append(points);
 };
 
 const setProgress = (percent) => {
@@ -107,6 +116,8 @@ const nextQuestion = () => {
   })
     .then((response) => response.json())
     .then((response) => {
+      console.log(response);
+      if (response.state === "finish") RedirectUrl("/scores");
       setTimeout(() => {
         canClick = true;
         document.querySelector(".question").querySelector("div").innerHTML =
@@ -158,6 +169,7 @@ const onCountryClick = (e) => {
   })
     .then((response) => response.json())
     .then((response) => {
+      document.querySelector("#points").innerHTML = `${response.points} points`;
       if (response.answer) {
         successAnswer();
         nextQuestion();

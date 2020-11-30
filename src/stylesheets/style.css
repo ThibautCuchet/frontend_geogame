@@ -178,3 +178,16 @@ body {
 .homeTitle h1 {
   padding-top: 30px;
 }
+
+.points {
+  bottom: 5em;
+  right: 5em;
+  width: 6em;
+  height: 4em;
+  background: white;
+  position: absolute;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
