@@ -42,6 +42,10 @@ body {
   background: #333333;
 }
 
+.navbar > div {
+  flex: 1;
+}
+
 .flex-around {
   display: flex;
   justify-content: space-around;
@@ -129,6 +133,21 @@ body {
   color: white;
 }
 
+.question {
+  position: absolute;
+  top: 8em;
+  height: 5em;
+  left: 30%;
+  width: 40%;
+  background: white;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1;
+}
+
 #main {
   flex: 1;
   background: #cac9c7;
@@ -142,12 +161,33 @@ body {
   cursor: pointer;
 }
 
+#logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 #mapid {
+  z-index: 0;
   flex: 1;
   width: 100%;
   background: #6facaa;
 }
 
-.homeTitle h1{
+.homeTitle h1 {
   padding-top: 30px;
+}
+
+.points {
+  bottom: 5em;
+  right: 5em;
+  width: 6em;
+  height: 4em;
+  background: white;
+  position: absolute;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
