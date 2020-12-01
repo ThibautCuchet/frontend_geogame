@@ -23,7 +23,7 @@ const MapPage = async (_data) => {
 
   fetch("/api/questions/start", { method: "GET" });
 
-  nextQuestion();
+  setTimeout(nextQuestion, 1000);
 };
 
 function loadMap(data) {
