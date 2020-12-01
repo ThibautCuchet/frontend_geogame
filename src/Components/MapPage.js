@@ -123,8 +123,10 @@ const nextQuestion = () => {
         document.querySelector(".question").querySelector("div").innerHTML =
           response.question;
         questionInterval = setInterval(() => {
-          if (percent >= 105) {
+          if (percent >= 101) {
             canClick = false;
+          }
+          if (percent >= 105) {
             clearInterval(questionInterval);
             setTimeout(() => wrongAnswer(), TIME_BETWEEN_QUESTION / 3);
             setTimeout(() => nextQuestion(), 1000);
