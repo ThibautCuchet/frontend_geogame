@@ -86,15 +86,37 @@ const WelcomeMessage = () => {
                                                 5550                  
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="table-info">
                         <th scope="row">
                                                 5                  
+                        </th>
+                        <td colspan="8">
+                                                You                  
+                        </td>
+                        <td>
+                                                5500                  
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                                                6                  
                         </th>
                         <td colspan="8">
                                                 Thiybeaultd                  
                         </td>
                         <td>
                                                 5400                  
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                                                7                  
+                        </th>
+                        <td colspan="8">
+                                                Boby                  
+                        </td>
+                        <td>
+                                                5000                  
                         </td>
                     </tr>
                 </tbody>
@@ -152,7 +174,7 @@ const WelcomeMessage = () => {
             </table>
             <div id="yourScore">
                     <strong>Your score: 3000 points</strong> <br>
-                    HighScore: 3500 points
+                    HighScore: 5500 points
                     <input type="submit" class="boutonRejouer" value="Play Again">
             </div>
         </div>
