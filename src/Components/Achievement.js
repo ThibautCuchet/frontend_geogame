@@ -5,6 +5,7 @@ const AchievementPage = () => {
     WelcomeMessage();
 }
 let page = document.querySelector("#main");
+
 const WelcomeMessage = () => {
   const element = document.createElement("p");
   element.className = "connectionTitle";

@@ -3,12 +3,14 @@ import ErrorPage from "./ErrorPage.js";
 import MapPage from "./MapPage.js";
 import Connection from "./ConnectionPage.js";
 import Achievement from "./Achievement.js";
+import ScorePage from "./ScorePage.js";
 
 const routes = {
   "/": HomePage,
   "/map": MapPage,
   "/connection": Connection,
   "/achievement": Achievement,
+  "/scorepage": ScorePage,
 };
 
 let navBar = document.querySelector("#navBar");
