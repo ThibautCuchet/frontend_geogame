@@ -129,7 +129,14 @@ const nextQuestion = () => {
       Authorization: localStorage.getItem("auth"),
     },
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(
+          "Error code : " + response.status + " : " + response.statusText
+        );
+
+      return response.json();
+    })
     .then((response) => {
       console.log(response);
       if (response.state === "finish") {
@@ -190,7 +197,13 @@ const onCountryClick = (e) => {
       Authorization: localStorage.getItem("auth"),
     },
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(
+          "Error code : " + response.status + " : " + response.statusText
+        );
+      return response.json();
+    })
     .then((response) => {
       document.querySelector("#points").innerHTML = `${response.points} points`;
       if (response.answer) {
