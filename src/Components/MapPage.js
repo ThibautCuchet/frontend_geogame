@@ -1,15 +1,29 @@
 const L = require("leaflet");
 const MAP_DATA = require("../country.json");
 import "../../node_modules/leaflet/dist/leaflet.css";
+import { TIME_BETWEEN_QUESTION, TIME_TO_ANSWER } from "../utils/config";
+import { blinkItem, setNavSize } from "../utils/render";
+import { RedirectUrl } from "./Router";
 
 let mapPage = `<div id="mapid"></div>`;
+let percent = 0;
+let questionInterval;
+let data;
+let canClick = false;
+let page = document.querySelector("#main");
 
-const MapPage = async (data) => {
-  console.log("Map", data);
-  let page = document.querySelector("#main");
+const MapPage = async (_data) => {
+  console.log("Map", _data);
+  data = _data;
   page.innerHTML = mapPage;
-
+  setNavSize("6em");
   loadMap(data);
+  setQuestionLayout();
+  percent = 0;
+
+  fetch("/api/questions/start", { method: "GET" });
+
+  setTimeout(nextQuestion, 1000);
 };
 
 function loadMap(data) {
@@ -21,7 +35,7 @@ function loadMap(data) {
   }).setView([51.505, -0.09], 2.5);
 
   let geojson = L.geoJSON(MAP_DATA, {
-    onEachFeature: null,
+    onEachFeature: onEachFeature,
     style: {
       color: "#A2A28B",
       fillOpacity: 1,
@@ -52,5 +66,121 @@ function loadMap(data) {
     },
   }).addTo(mymap);
 }
+
+const setQuestionLayout = () => {
+  let question = document.createElement("div");
+  question.className = "question";
+  question.innerHTML = `<div style="display: flex; justify-content: center; align-items: center; flex: 1"></div>
+  <div class="progress" style="height: 10px;">
+    <div class="progress-bar" id="progress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>`;
+
+  let points = document.createElement("div");
+  points.className = "points";
+  points.innerHTML = `<div id="points">0 points</div>`;
+
+  page.append(question);
+  page.append(points);
+};
+
+const setProgress = (percent) => {
+  let progress = document.querySelector("#progress");
+  progress.style.width = `${percent}%`;
+  if (percent == 90) {
+    progress.className = "progress-bar bg-danger";
+  } else if (percent == 50) {
+    progress.className = "progress-bar bg-warning";
+  } else if (percent == 0) {
+    progress.className = "progress-bar bg-info";
+  }
+};
+
+const nextQuestion = () => {
+  clearInterval(questionInterval);
+  setTimeout(() => {
+    document.querySelector(".question").querySelector("div").innerHTML = "";
+    percent = 0;
+    setProgress(percent);
+  }, TIME_BETWEEN_QUESTION / 2);
+
+  fetch("/api/questions/next", {
+    method: "POST",
+    body: JSON.stringify({
+      location: data.map,
+      type: Object.keys(data).filter((item) => data[item] === true),
+      username: "Thib",
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      if (response.state === "finish") RedirectUrl("/scores", data);
+      setTimeout(() => {
+        canClick = true;
+        document.querySelector(".question").querySelector("div").innerHTML =
+          response.question;
+        questionInterval = setInterval(() => {
+          if (percent >= 101) {
+            canClick = false;
+          }
+          if (percent >= 105) {
+            clearInterval(questionInterval);
+            setTimeout(() => wrongAnswer(), TIME_BETWEEN_QUESTION / 3);
+            setTimeout(() => nextQuestion(), 1000);
+          }
+          percent++;
+          setProgress(percent);
+        }, TIME_TO_ANSWER / 100);
+      }, TIME_BETWEEN_QUESTION);
+    });
+};
+
+const successAnswer = () => {
+  blinkItem(document.querySelector(".question"), "green", {
+    duration: 500,
+    iterations: 3,
+  });
+};
+
+const wrongAnswer = () => {
+  blinkItem(document.querySelector(".question"), "red", {
+    duration: 500,
+    iterations: 3,
+  });
+};
+
+const onEachFeature = (feature, layer) => {
+  layer.on({
+    click: onCountryClick,
+  });
+};
+
+const onCountryClick = (e) => {
+  if (!canClick) return;
+  canClick = false;
+  let selected = e.target.feature.properties.iso2;
+  clearInterval(questionInterval);
+  fetch("/api/questions/answer", {
+    method: "POST",
+    body: JSON.stringify({ answer: selected }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      document.querySelector("#points").innerHTML = `${response.points} points`;
+      if (response.answer) {
+        successAnswer();
+        nextQuestion();
+      } else {
+        wrongAnswer();
+        nextQuestion();
+      }
+    });
+};
 
 export default MapPage;

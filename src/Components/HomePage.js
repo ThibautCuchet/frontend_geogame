@@ -1,5 +1,5 @@
 import { Button } from "bootstrap";
-import { setTitle } from "../utils/render.js";
+import { setNavSize, setTitle } from "../utils/render.js";
 import { RedirectUrl } from "./Router.js";
 
 const worldParts = [
@@ -63,10 +63,12 @@ const gamemodes = [
 ];
 let page = document.querySelector("#main");
 
-const HomePage = async () => {
+const HomePage = () => {
   setTitle("Home");
+  page.innerHTML = "";
   WelcomeMessage();
   WorldSelection();
+  setNavSize("10em");
 };
 
 const WelcomeMessage = () => {
