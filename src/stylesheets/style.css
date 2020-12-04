@@ -268,24 +268,19 @@ input[type="text"]:placeholder {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
   background: #fff;
-  padding: 30px;
-  width: 100%;
-  max-width: 1500px;
   position: relative;
-  padding: 20px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
   display: flex;
   border: solid 3px lightgrey;
-  height: 600px;
-  padding: 20px;
+  height: 650px;
 }
 
 #ScoreContent h4 {
   text-align: center;
   color: grey;
-  padding: 10px;
   font-size: 25px;
+  padding: 20px;
 }
 
 #ScoreContent #yourScore {
@@ -294,4 +289,8 @@ input[type="text"]:placeholder {
   padding: 10px;
   padding-top: 50px;
   text-align: center;
+}
+
+#ScoreContent #yourScore .boutonRejouer{
+  margin-top: 30px;
 }
