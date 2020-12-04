@@ -1,29 +1,32 @@
 import { setTitle } from "../utils/render.js";
 
-const ScorePage = () => {
-    setTitle("ScorePage");
-    WelcomeMessage();
-    ScoreBoard();
-    Result();
-}
+let data;
+
+const ScorePage = (_data) => {
+  setTitle("ScorePage");
+  data = _data;
+  WelcomeMessage();
+  ScoreBoard();
+  Result();
+};
 let page = document.querySelector("#main");
 
 const WelcomeMessage = () => {
-    const element = document.createElement("p");
-    element.className = "connectionTitle";
-    element.innerHTML = `<h1><strong>GAME OVER</strong></h1>
+  const element = document.createElement("p");
+  element.className = "connectionTitle";
+  element.innerHTML = `<h1><strong>GAME OVER</strong></h1>
        Great job adventurer !`;
-    element.style.width = "50%";
-    element.style.textAlign = "center";
-    element.style.fontSize = "25px";
-    page.append(element);
-  };
+  element.style.width = "50%";
+  element.style.textAlign = "center";
+  element.style.fontSize = "25px";
+  page.append(element);
+};
 
-  const ScoreBoard = () => {
-      const element = document.createElement("div");
-      element.className = "score";
-      element.style.width = "65%";
-      element.innerHTML = `
+const ScoreBoard = () => {
+  const element = document.createElement("div");
+  element.className = "score";
+  element.style.width = "65%";
+  element.innerHTML = `
       <div id="ScoreContent">
         <div style="display: flex; flex-direction: column; flex: 1; padding:20px">
             <h4> SCOREBOARD </h4>
@@ -41,84 +44,7 @@ const WelcomeMessage = () => {
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                                                1                  
-                        </th>
-                        <td colspan="8">
-                                                MaxLaMenace                  
-                        </td>
-                        <td>
-                                                6500                  
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                                                2                  
-                        </th>
-                        <td colspan="8">
-                                                MaxLaTerreur                  
-                        </td>
-                        <td>
-                                                6250                  
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                                                3                  
-                        </th>
-                        <td colspan="8">
-                                                Timmy                  
-                        </td>
-                        <td>
-                                                5700                  
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                                                4                  
-                        </th>
-                        <td colspan="8">
-                                                Joseph                  
-                        </td>
-                        <td>
-                                                5550                  
-                        </td>
-                    </tr>
-                    <tr class="table-info">
-                        <th scope="row">
-                                                5                  
-                        </th>
-                        <td colspan="8">
-                                                You                  
-                        </td>
-                        <td>
-                                                5500                  
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                                                6                  
-                        </th>
-                        <td colspan="8">
-                                                Thiybeaultd                  
-                        </td>
-                        <td>
-                                                5400                  
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                                                7                  
-                        </th>
-                        <td colspan="8">
-                                                Boby                  
-                        </td>
-                        <td>
-                                                5000                  
-                        </td>
-                    </tr>
+                <tbody id="score-table">
                 </tbody>
             </table>
         </div>
@@ -179,8 +105,33 @@ const WelcomeMessage = () => {
             </div>
         </div>
     </div>`;
-      element.style.fontSize = "20px";
-      page.append(element);
-  }
+  element.style.fontSize = "20px";
+  page.append(element);
+};
+
+const Result = () => {
+  fetch(`/api/scores/top/${data.map}`)
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(response.status + " " + response.statusText);
+
+      return response.json();
+    })
+    .then((response) => {
+      response.forEach((item, index) => {
+        let element = document.createElement("tr");
+        element.innerHTML = `<td scope="row">
+                                  ${index + 1}                
+                            </td>
+                            <td colspan="8">
+                                  ${item.username}               
+                            </td>
+                            <td>
+                                  ${item.points}             
+                            </td>`;
+      });
+      document.querySelector("#score-table").append(element);
+    });
+};
 
 export default ScorePage;
