@@ -1,15 +1,17 @@
 import { setTitle } from "../utils/render.js";
+import { RedirectUrl } from "./Router.js";
 
 let data;
+let page = document.querySelector("#main");
 
 const ScorePage = (_data) => {
   setTitle("ScorePage");
+  page.innerHTML = "";
   data = _data;
   WelcomeMessage();
   ScoreBoard();
   Result();
 };
-let page = document.querySelector("#main");
 
 const WelcomeMessage = () => {
   const element = document.createElement("p");
@@ -68,44 +70,47 @@ const ScoreBoard = () => {
                         <td colspan="8">
                             Flags found
                         </td>
-                        <td class="text-center">
-                            5/10
+                        <td class="text-center" id="flag">
+                            0
                         </td>
                     </tr>
                     <tr>
                         <td colspan="8">
                             Countries found
                         </td>
-                        <td class="text-center">
-                            8/10
+                        <td class="text-center" id="country">
+                            0
                         </td>
                     </tr>
                     <tr>
                         <td colspan="8">
                             Capitals found
                         </td>
-                        <td class="text-center">
-                            7/10
+                        <td class="text-center" id="capital">
+                            0
                         </td>
                     </tr>
                     <tr>
                         <td colspan="8">
                             ISO codes found
                         </td>
-                        <td class="text-center">
-                            2/10
+                        <td class="text-center" id="iso">
+                            0
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div id="yourScore">
-                    <strong>Your score: 3000 points</strong> <br>
-                    HighScore: 5500 points
-                    <input type="submit" class="boutonRejouer" value="Play Again">
+                    <strong></strong><br>
+                    <div></div>
+                    <button type="button" class="boutonRejouer">Play Again</button>
             </div>
         </div>
     </div>`;
   element.style.fontSize = "20px";
+  element
+    .querySelector(".boutonRejouer")
+    .addEventListener("click", () => RedirectUrl("/map", data));
   page.append(element);
 };
 
@@ -120,8 +125,10 @@ const Result = () => {
     .then((response) => {
       response.forEach((item, index) => {
         let element = document.createElement("tr");
+        if (item.username === localStorage.getItem("username"))
+          element.className = "table-info";
         element.innerHTML = `<td scope="row">
-                                  ${index + 1}                
+                                  <strong>${index + 1}</strong>                
                             </td>
                             <td colspan="8">
                                   ${item.username}               
@@ -129,8 +136,32 @@ const Result = () => {
                             <td>
                                   ${item.points}             
                             </td>`;
+        document.querySelector("#score-table").append(element);
       });
-      document.querySelector("#score-table").append(element);
+    });
+
+  fetch(`/api/scores/game/${data.map}/${localStorage.getItem("username")}`)
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(response.status + " " + response.statusText);
+      return response.json();
+    })
+    .then((response) => {
+      console.log(response);
+      let resultScore = document.querySelector("#yourScore");
+
+      resultScore.querySelector(
+        "strong"
+      ).innerHTML = `Your score: ${response.current} points`;
+
+      resultScore.querySelector(
+        "div"
+      ).innerHTML = `High score: ${response.best} points`;
+
+      Object.keys(response.questions).forEach(
+        (item) =>
+          (document.getElementById(item).innerHTML = response.questions[item])
+      );
     });
 };
 

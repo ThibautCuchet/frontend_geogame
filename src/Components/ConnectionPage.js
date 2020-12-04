@@ -26,33 +26,6 @@ const CreateFormConnection = () => {
   element.innerHTML = `<div class="wrapper fadeInDown">
   <div id="formContent">
     <div style="display: flex; flex-direction: column; justify-content: space-between; flex: 1">
-<<<<<<< HEAD
-      <!-- Login Form -->
-      <h5>USER LOGIN</h5>
-      <form>
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-        <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-        <input type="submit" class="fadeIn fourth" value="Log In">
-      </form>
-      <!-- Remind Passowrd -->
-      <div id="formFooter">
-        <a class="underlineHover" href="#">Forgot Password?</a>
-      </div>
-    </div>
-    
-    <div style="width: 5px; background: #bababa"></div>
-      <!-- Register Form -->
-      <div style="display: flex; flex-direction: column; justify-content: space-between; flex: 1">
-      <h5>USER REGISTER</h5>
-      <form>
-        <input type="text" id="login" class="fadeIn second" name="register" placeholder="login">
-        <input type="text" id="email" class="fadeIn four" name="register" placeholder="email">
-        <input type="text" id="password" class="fadeIn third" name="register" placeholder="password">
-        <input type="submit" class="fadeIn five" value="Register">
-      </form>
-      <div id="formFooter">
-      </div>
-=======
     <!-- Login Form -->
     <h5>USER LOGIN</h5>
     <form id="login">
@@ -78,7 +51,6 @@ const CreateFormConnection = () => {
     </form>
     <div id="formFooter">
     </div>
->>>>>>> origin/main
     </div>
   </div>
 </div>`;
@@ -121,6 +93,7 @@ const loginListener = (e) => {
     .then((response) => {
       if (response.token) {
         localStorage.setItem("auth", response.token);
+        localStorage.setItem("username", response.username);
         RedirectUrl("/");
       }
     })
@@ -150,6 +123,7 @@ const registerListener = (e) => {
     .then((response) => {
       if (response.token) {
         localStorage.setItem("auth", response.token);
+        localStorage.setItem("username", response.username);
         RedirectUrl("/");
       }
     })
