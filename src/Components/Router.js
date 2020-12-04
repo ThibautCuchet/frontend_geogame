@@ -10,7 +10,7 @@ const routes = {
   "/map": MapPage,
   "/connection": Connection,
   "/achievement": Achievement,
-  "/scorepage": ScorePage,
+  "/scores": ScorePage,
 };
 
 let navBar = document.querySelector("#navBar");
