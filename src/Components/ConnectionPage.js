@@ -93,6 +93,7 @@ const loginListener = (e) => {
     .then((response) => {
       if (response.token) {
         localStorage.setItem("auth", response.token);
+        localStorage.setItem("username", response.username);
         RedirectUrl("/");
       }
     })
@@ -122,6 +123,7 @@ const registerListener = (e) => {
     .then((response) => {
       if (response.token) {
         localStorage.setItem("auth", response.token);
+        localStorage.setItem("username", response.username);
         RedirectUrl("/");
       }
     })

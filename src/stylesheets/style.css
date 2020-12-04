@@ -236,7 +236,8 @@ body {
 
 input[type="button"],
 input[type="submit"],
-input[type="reset"] {
+input[type="reset"],
+button {
   background-color: #56baed;
   border: none;
   color: white;
@@ -260,13 +261,15 @@ input[type="reset"] {
 
 input[type="button"]:hover,
 input[type="submit"]:hover,
-input[type="reset"]:hover {
+input[type="reset"]:hover,
+button:hover {
   background-color: #39ace7;
 }
 
 input[type="button"]:active,
 input[type="submit"]:active,
-input[type="reset"]:active {
+input[type="reset"]:active,
+button:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -306,6 +309,38 @@ input[type="email"]:focus {
 
 input[type="text"]:placeholder {
   color: #cccccc;
+}
+
+/* ScorePage*/
+#ScoreContent {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  position: relative;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  display: flex;
+  border: solid 3px lightgrey;
+  height: 650px;
+}
+
+#ScoreContent h4 {
+  text-align: center;
+  color: grey;
+  font-size: 25px;
+  padding: 20px;
+}
+
+#ScoreContent #yourScore {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  padding-top: 50px;
+  text-align: center;
+}
+
+#ScoreContent #yourScore .boutonRejouer {
+  margin-top: 30px;
 }
 
 .error-message {

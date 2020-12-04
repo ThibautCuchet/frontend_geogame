@@ -21,7 +21,18 @@ const MapPage = async (_data) => {
   setQuestionLayout();
   percent = 0;
 
-  fetch("/api/questions/start", { method: "GET" });
+  fetch("/api/questions/start", {
+    method: "POST",
+    body: JSON.stringify({
+      location: data.map,
+      type: Object.keys(data).filter((item) => data[item] === true),
+      username: localStorage.getItem("username"),
+    }),
+    headers: {
+      Authorization: localStorage.getItem("auth"),
+      "Content-Type": "application/json",
+    },
+  });
 
   setTimeout(nextQuestion, 1000);
 };
@@ -97,10 +108,13 @@ const setProgress = (percent) => {
 
 const nextQuestion = () => {
   clearInterval(questionInterval);
+  console.log("Nouvelle question !");
   setTimeout(() => {
-    document.querySelector(".question").querySelector("div").innerHTML = "";
-    percent = 0;
-    setProgress(percent);
+    if (document.querySelector(".question")) {
+      document.querySelector(".question").querySelector("div").innerHTML = "";
+      percent = 0;
+      setProgress(percent);
+    }
   }, TIME_BETWEEN_QUESTION / 2);
 
   fetch("/api/questions/next", {
@@ -108,16 +122,21 @@ const nextQuestion = () => {
     body: JSON.stringify({
       location: data.map,
       type: Object.keys(data).filter((item) => data[item] === true),
-      username: "Thib",
+      username: localStorage.getItem("username"),
     }),
     headers: {
       "Content-Type": "application/json",
+      Authorization: localStorage.getItem("auth"),
     },
   })
     .then((response) => response.json())
     .then((response) => {
       console.log(response);
-      if (response.state === "finish") RedirectUrl("/scores");
+      if (response.state === "finish") {
+        clearInterval(questionInterval);
+        RedirectUrl("/scores", data);
+        return;
+      }
       setTimeout(() => {
         canClick = true;
         document.querySelector(".question").querySelector("div").innerHTML =
@@ -168,6 +187,7 @@ const onCountryClick = (e) => {
     body: JSON.stringify({ answer: selected }),
     headers: {
       "Content-Type": "application/json",
+      Authorization: localStorage.getItem("auth"),
     },
   })
     .then((response) => response.json())
