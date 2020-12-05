@@ -124,6 +124,7 @@ const Result = () => {
     })
     .then((response) => {
       response.forEach((item, index) => {
+        console.log(item);
         let element = document.createElement("tr");
         if (item.username === localStorage.getItem("username"))
           element.className = "table-info";
@@ -134,7 +135,7 @@ const Result = () => {
                                   ${item.username}               
                             </td>
                             <td>
-                                  ${item.points}             
+                                  ${item.score}             
                             </td>`;
         document.querySelector("#score-table").append(element);
       });
