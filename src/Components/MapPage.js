@@ -2,7 +2,7 @@ const L = require("leaflet");
 const MAP_DATA = require("../country.json");
 import "../../node_modules/leaflet/dist/leaflet.css";
 import { TIME_BETWEEN_QUESTION, TIME_TO_ANSWER } from "../utils/config";
-import { blinkItem, setNavSize } from "../utils/render";
+import { blinkItem, setNavSize, showError } from "../utils/render";
 import { RedirectUrl } from "./Router";
 
 let mapPage = `<div id="mapid"></div>`;
@@ -32,7 +32,18 @@ const MapPage = async (_data) => {
       Authorization: localStorage.getItem("auth"),
       "Content-Type": "application/json",
     },
-  });
+  })
+    .then((response) => {
+      if (response.ok) return;
+      return response.text().then((text) => {
+        throw new Error(text);
+      });
+    })
+    .catch((error) => {
+      RedirectUrl("/connection");
+
+      setTimeout(() => showError(error), 100);
+    });
 
   setTimeout(nextQuestion, 1000);
 };
@@ -108,7 +119,6 @@ const setProgress = (percent) => {
 
 const nextQuestion = () => {
   clearInterval(questionInterval);
-  console.log("Nouvelle question !");
   setTimeout(() => {
     if (document.querySelector(".question")) {
       document.querySelector(".question").querySelector("div").innerHTML = "";
@@ -130,15 +140,9 @@ const nextQuestion = () => {
     },
   })
     .then((response) => {
-      if (!response.ok)
-        throw new Error(
-          "Error code : " + response.status + " : " + response.statusText
-        );
-
-      return response.json();
+      if (response.ok) return response.json();
     })
     .then((response) => {
-      console.log(response);
       if (response.state === "finish") {
         clearInterval(questionInterval);
         RedirectUrl("/scores", data);
@@ -189,7 +193,7 @@ const onCountryClick = (e) => {
   canClick = false;
   let selected = e.target.feature.properties.iso2;
   clearInterval(questionInterval);
-  fetch("https://backend-geogame.herokuapp.com/api/questions/answer", {
+  fetch("/api/questions/answer", {
     method: "POST",
     body: JSON.stringify({ answer: selected }),
     headers: {

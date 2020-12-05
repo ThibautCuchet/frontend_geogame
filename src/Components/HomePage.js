@@ -1,5 +1,5 @@
 import { Button } from "bootstrap";
-import { setNavSize, setTitle } from "../utils/render.js";
+import { setNavSize, setTitle, showError } from "../utils/render.js";
 import { RedirectUrl } from "./Router.js";
 
 const worldParts = [
@@ -69,6 +69,7 @@ const HomePage = () => {
   WelcomeMessage();
   WorldSelection();
   setNavSize("10em");
+  checkLogged();
 };
 
 const WelcomeMessage = () => {
@@ -203,6 +204,26 @@ const getSwitchSelection = () => {
 const isSwitches = () => {
   let switches = getSwitchSelection();
   return Object.keys(switches).some((item) => switches[item]);
+};
+
+const checkLogged = () => {
+  fetch("/api/users/islogged", {
+    method: "GET",
+    headers: {
+      Authorization: localStorage.getItem("auth"),
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (response.ok) return;
+      return response.text().then((text) => {
+        throw new Error(text);
+      });
+    })
+    .catch((error) => {
+      RedirectUrl("/connection");
+      showError(error);
+    });
 };
 
 export default HomePage;

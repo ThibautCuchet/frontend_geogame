@@ -8,5 +8,10 @@
     "/**": {
       "Strict-TransportSecurity": "max-age=31557600"
     }
+  },
+  "proxies": {
+    "/api/": {
+      "origin": "https://backend-geogame.herokuapp.com/"
+    }
   }
 }

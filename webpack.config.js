@@ -16,13 +16,12 @@ module.exports = {
     public: "localhost", // force to open localhost instead of 0.0.0.0
     open: true, // open the default browser
     historyApiFallback: true, // serve index.html instead of routes leading to no specific ressource
-    /*proxy: {
+    proxy: {
       "/api": {
         target: "http://localhost:3000",
         pathRewrite: { "^/api": "" },
       },
     },
-    */
   },
   module: {
     rules: [

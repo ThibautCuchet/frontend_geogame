@@ -115,7 +115,7 @@ const ScoreBoard = () => {
 };
 
 const Result = () => {
-  fetch(`https://backend-geogame.herokuapp.com/api/scores/top/${data.map}`)
+  fetch(`/api/scores/top/${data.map}`)
     .then((response) => {
       if (!response.ok)
         throw new Error(response.status + " " + response.statusText);
@@ -140,11 +140,7 @@ const Result = () => {
       });
     });
 
-  fetch(
-    `https://backend-geogame.herokuapp.com/api/scores/game/${
-      data.map
-    }/${localStorage.getItem("username")}`
-  )
+  fetch(`/api/scores/game/${data.map}/${localStorage.getItem("username")}`)
     .then((response) => {
       if (!response.ok)
         throw new Error(response.status + " " + response.statusText);

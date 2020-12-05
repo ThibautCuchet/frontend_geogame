@@ -1,4 +1,4 @@
-import { setTitle } from "../utils/render.js";
+import { setTitle, showError } from "../utils/render.js";
 import { RedirectUrl } from "./Router.js";
 
 let page = document.querySelector("#main");
@@ -72,7 +72,7 @@ const setFormListener = () => {
 const loginListener = (e) => {
   e.preventDefault();
   console.log("Login");
-  fetch("https://backend-geogame.herokuapp.com/api/users/login", {
+  fetch("/api/users/login", {
     method: "POST",
     body: JSON.stringify({
       username: e.target["0"].value,
@@ -83,12 +83,10 @@ const loginListener = (e) => {
     },
   })
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(
-          "Error code :" + response.status + " : " + response.statusText
-        );
-      }
-      return response.json();
+      if (response.ok) return response.json();
+      return response.text().then((text) => {
+        throw new Error(text);
+      });
     })
     .then((response) => {
       if (response.token) {
@@ -97,12 +95,14 @@ const loginListener = (e) => {
         RedirectUrl("/");
       }
     })
-    .catch((err) => showError(err.message));
+    .catch((error) => {
+      showError(error);
+    });
 };
 
 const registerListener = (e) => {
   e.preventDefault();
-  fetch("https://backend-geogame.herokuapp.com/api/users/register", {
+  fetch("/api/users/register", {
     method: "POST",
     body: JSON.stringify({
       username: e.target["0"].value,
@@ -114,11 +114,10 @@ const registerListener = (e) => {
     },
   })
     .then((response) => {
-      if (!response.ok)
-        throw new Error(
-          "Error code :" + response.status + " : " + response.statusText
-        );
-      return response.json();
+      if (response.ok) return response.json();
+      return response.text().then((text) => {
+        throw new Error(text);
+      });
     })
     .then((response) => {
       if (response.token) {
@@ -127,13 +126,9 @@ const registerListener = (e) => {
         RedirectUrl("/");
       }
     })
-    .catch((err) => showError(err.message));
-};
-
-const showError = (message) => {
-  let element = document.querySelector("#error-message");
-  element.innerHTML = `<div class="error-message alert alert-danger" role="alert">${message}</div>`;
-  setTimeout(() => (element.innerHTML = ""), 5000);
+    .catch((error) => {
+      showError(error);
+    });
 };
 
 export default ConnectionPage;
