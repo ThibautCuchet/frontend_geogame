@@ -189,7 +189,7 @@ const onCountryClick = (e) => {
   canClick = false;
   let selected = e.target.feature.properties.iso2;
   clearInterval(questionInterval);
-  fetch("/api/questions/answer", {
+  fetch("https://backend-geogame.herokuapp.com/api/questions/answer", {
     method: "POST",
     body: JSON.stringify({ answer: selected }),
     headers: {

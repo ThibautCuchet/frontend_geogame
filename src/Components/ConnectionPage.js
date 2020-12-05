@@ -72,7 +72,7 @@ const setFormListener = () => {
 const loginListener = (e) => {
   e.preventDefault();
   console.log("Login");
-  fetch("/api/users/login", {
+  fetch("https://backend-geogame.herokuapp.com/api/users/login", {
     method: "POST",
     body: JSON.stringify({
       username: e.target["0"].value,
@@ -102,7 +102,7 @@ const loginListener = (e) => {
 
 const registerListener = (e) => {
   e.preventDefault();
-  fetch("/api/users/register", {
+  fetch("https://backend-geogame.herokuapp.com/api/users/register", {
     method: "POST",
     body: JSON.stringify({
       username: e.target["0"].value,
