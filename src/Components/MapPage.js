@@ -11,6 +11,9 @@ let questionInterval;
 let data;
 let canClick = false;
 let page = document.querySelector("#main");
+let mymap;
+let country;
+let geojson;
 
 const MapPage = async (_data) => {
   console.log("Map", _data);
@@ -49,14 +52,14 @@ const MapPage = async (_data) => {
 };
 
 function loadMap(data) {
-  let mymap = L.map("mapid", {
+  mymap = L.map("mapid", {
     attributionControl: false,
     zoomSnap: 0.1,
     minZoom: 2.5,
     maxZoom: 12,
   }).setView([51.505, -0.09], 2.5);
 
-  let geojson = L.geoJSON(MAP_DATA, {
+  geojson = L.geoJSON(MAP_DATA, {
     onEachFeature: onEachFeature,
     style: {
       color: "#A2A28B",
@@ -143,6 +146,7 @@ const nextQuestion = () => {
       if (response.ok) return response.json();
     })
     .then((response) => {
+      console.log(response);
       if (response.state === "finish") {
         clearInterval(questionInterval);
         RedirectUrl("/scores", data);
@@ -152,6 +156,7 @@ const nextQuestion = () => {
         canClick = true;
         document.querySelector(".question").querySelector("div").innerHTML =
           response.question;
+        country = response.country;
         questionInterval = setInterval(() => {
           if (percent >= 101) {
             canClick = false;
@@ -176,10 +181,13 @@ const successAnswer = () => {
 };
 
 const wrongAnswer = () => {
+  mymap.panTo(country.latlng, { animate: true, duration: 0.5 });
   blinkItem(document.querySelector(".question"), "red", {
     duration: 500,
     iterations: 3,
   });
+  colorLayout("red");
+  setTimeout(() => colorLayout("#e0cda9"), 2000);
 };
 
 const onEachFeature = (feature, layer) => {
@@ -218,6 +226,15 @@ const onCountryClick = (e) => {
         nextQuestion();
       }
     });
+};
+
+const colorLayout = (color) => {
+  geojson.eachLayer((layer) => {
+    if (layer.feature.properties.iso2 === country.iso2)
+      layer.setStyle({
+        fillColor: color,
+      });
+  });
 };
 
 export default MapPage;
