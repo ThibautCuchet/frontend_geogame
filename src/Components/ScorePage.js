@@ -1,29 +1,34 @@
 import { setTitle } from "../utils/render.js";
+import { RedirectUrl } from "./Router.js";
 
-const ScorePage = () => {
-    setTitle("ScorePage");
-    WelcomeMessage();
-    ScoreBoard();
-    Result();
-}
+let data;
 let page = document.querySelector("#main");
 
-const WelcomeMessage = () => {
-    const element = document.createElement("p");
-    element.className = "connectionTitle";
-    element.innerHTML = `<h1><strong>GAME OVER</strong></h1>
-       Great job adventurer !`;
-    element.style.width = "50%";
-    element.style.textAlign = "center";
-    element.style.fontSize = "25px";
-    page.append(element);
-  };
+const ScorePage = (_data) => {
+  setTitle("ScorePage");
+  page.innerHTML = "";
+  data = _data;
+  WelcomeMessage();
+  ScoreBoard();
+  Result();
+};
 
-  const ScoreBoard = () => {
-      const element = document.createElement("div");
-      element.className = "score";
-      element.style.width = "65%";
-      element.innerHTML = `
+const WelcomeMessage = () => {
+  const element = document.createElement("p");
+  element.className = "connectionTitle";
+  element.innerHTML = `<h1><strong>GAME OVER</strong></h1>
+       Great job adventurer !`;
+  element.style.width = "50%";
+  element.style.textAlign = "center";
+  element.style.fontSize = "25px";
+  page.append(element);
+};
+
+const ScoreBoard = () => {
+  const element = document.createElement("div");
+  element.className = "score";
+  element.style.width = "65%";
+  element.innerHTML = `
       <div id="ScoreContent">
         <div style="display: flex; flex-direction: column; flex: 1; padding:20px">
             <h4> SCOREBOARD </h4>
@@ -41,84 +46,7 @@ const WelcomeMessage = () => {
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                                                1                  
-                        </th>
-                        <td colspan="8">
-                                                MaxLaMenace                  
-                        </td>
-                        <td>
-                                                6500                  
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                                                2                  
-                        </th>
-                        <td colspan="8">
-                                                MaxLaTerreur                  
-                        </td>
-                        <td>
-                                                6250                  
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                                                3                  
-                        </th>
-                        <td colspan="8">
-                                                Timmy                  
-                        </td>
-                        <td>
-                                                5700                  
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                                                4                  
-                        </th>
-                        <td colspan="8">
-                                                Joseph                  
-                        </td>
-                        <td>
-                                                5550                  
-                        </td>
-                    </tr>
-                    <tr class="table-info">
-                        <th scope="row">
-                                                5                  
-                        </th>
-                        <td colspan="8">
-                                                You                  
-                        </td>
-                        <td>
-                                                5500                  
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                                                6                  
-                        </th>
-                        <td colspan="8">
-                                                Thiybeaultd                  
-                        </td>
-                        <td>
-                                                5400                  
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                                                7                  
-                        </th>
-                        <td colspan="8">
-                                                Boby                  
-                        </td>
-                        <td>
-                                                5000                  
-                        </td>
-                    </tr>
+                <tbody id="score-table">
                 </tbody>
             </table>
         </div>
@@ -142,45 +70,99 @@ const WelcomeMessage = () => {
                         <td colspan="8">
                             Flags found
                         </td>
-                        <td class="text-center">
-                            5/10
+                        <td class="text-center" id="flag">
+                            0
                         </td>
                     </tr>
                     <tr>
                         <td colspan="8">
                             Countries found
                         </td>
-                        <td class="text-center">
-                            8/10
+                        <td class="text-center" id="country">
+                            0
                         </td>
                     </tr>
                     <tr>
                         <td colspan="8">
                             Capitals found
                         </td>
-                        <td class="text-center">
-                            7/10
+                        <td class="text-center" id="capital">
+                            0
                         </td>
                     </tr>
                     <tr>
                         <td colspan="8">
                             ISO codes found
                         </td>
-                        <td class="text-center">
-                            2/10
+                        <td class="text-center" id="iso">
+                            0
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div id="yourScore">
-                    <strong>Your score: 3000 points</strong> <br>
-                    HighScore: 5500 points
-                    <input type="submit" class="boutonRejouer" value="Play Again">
+                    <strong></strong><br>
+                    <div></div>
+                    <button type="button" class="boutonRejouer">Play Again</button>
             </div>
         </div>
     </div>`;
-      element.style.fontSize = "20px";
-      page.append(element);
-  }
+  element.style.fontSize = "20px";
+  element
+    .querySelector(".boutonRejouer")
+    .addEventListener("click", () => RedirectUrl("/map", data));
+  page.append(element);
+};
+
+const Result = () => {
+  fetch(`/api/scores/top/${data.map}`)
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(response.status + " " + response.statusText);
+
+      return response.json();
+    })
+    .then((response) => {
+      response.forEach((item, index) => {
+        let element = document.createElement("tr");
+        if (item.username === localStorage.getItem("username"))
+          element.className = "table-info";
+        element.innerHTML = `<td scope="row">
+                                  <strong>${index + 1}</strong>                
+                            </td>
+                            <td colspan="8">
+                                  ${item.username}               
+                            </td>
+                            <td>
+                                  ${item.points}             
+                            </td>`;
+        document.querySelector("#score-table").append(element);
+      });
+    });
+
+  fetch(`/api/scores/game/${data.map}/${localStorage.getItem("username")}`)
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(response.status + " " + response.statusText);
+      return response.json();
+    })
+    .then((response) => {
+      console.log(response);
+      let resultScore = document.querySelector("#yourScore");
+
+      resultScore.querySelector(
+        "strong"
+      ).innerHTML = `Your score: ${response.current} points`;
+
+      resultScore.querySelector(
+        "div"
+      ).innerHTML = `High score: ${response.best} points`;
+
+      Object.keys(response.questions).forEach(
+        (item) =>
+          (document.getElementById(item).innerHTML = response.questions[item])
+      );
+    });
+};
 
 export default ScorePage;

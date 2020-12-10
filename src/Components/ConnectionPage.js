@@ -1,10 +1,15 @@
 import { setTitle } from "../utils/render.js";
+import { RedirectUrl } from "./Router.js";
+
+let page = document.querySelector("#main");
+
 const ConnectionPage = () => {
   setTitle("Connection");
+  page.innerHTML = "";
   WelcomeMessage();
   CreateFormConnection();
 };
-let page = document.querySelector("#main");
+
 const WelcomeMessage = () => {
   const element = document.createElement("p");
   element.className = "connectionTitle";
@@ -16,40 +21,119 @@ const WelcomeMessage = () => {
 };
 
 const CreateFormConnection = () => {
-  const element = document.createElement("div");
+  let element = document.createElement("div");
   element.className = "formConnection";
   element.innerHTML = `<div class="wrapper fadeInDown">
   <div id="formContent">
     <div style="display: flex; flex-direction: column; justify-content: space-between; flex: 1">
-      <!-- Login Form -->
-      <h5>USER LOGIN</h5>
-      <form>
-        <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-        <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-        <input type="submit" class="fadeIn fourth" value="Log In">
-      </form>
-      <!-- Remind Passowrd -->
-      <div id="formFooter">
-        <a class="underlineHover" href="#">Forgot Password?</a>
-      </div>
+    <!-- Login Form -->
+    <h5>USER LOGIN</h5>
+    <form id="login">
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login" required>
+      <input type="password" id="password" class="fadeIn third" name="login" placeholder="password" required>
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a>
+    </div>
     </div>
     
     <div style="width: 5px; background: #bababa"></div>
-      <!-- Register Form -->
-      <div style="display: flex; flex-direction: column; justify-content: space-between; flex: 1">
-      <h5>USER REGISTER</h5>
-      <form>
-        <input type="text" id="login" class="fadeIn second" name="register" placeholder="login">
-        <input type="text" id="email" class="fadeIn four" name="register" placeholder="email">
-        <input type="text" id="password" class="fadeIn third" name="register" placeholder="password">
-        <input type="submit" class="fadeIn five" value="Register">
-      </form>
-      <div id="formFooter">
-      </div>
+    <!-- Register Form -->
+    <div style="display: flex; flex-direction: column; justify-content: space-between; flex: 1">
+    <h5>USER REGISTER</h5>
+    <form id="register">
+      <input type="text" id="login" class="fadeIn second" name="register" placeholder="login" required>
+      <input type="email" id="email" class="fadeIn four" name="register" placeholder="email" required>
+      <input type="password" id="password" class="fadeIn third" name="register" placeholder="password" required>
+      <input type="submit" class="fadeIn five" value="Register">
+    </form>
+    <div id="formFooter">
+    </div>
     </div>
   </div>
 </div>`;
   page.append(element);
+  element = document.createElement("div");
+  element.id = "error-message";
+  page.append(element);
+  page.append(document.createElement("div"));
+  setFormListener();
+};
+
+const setFormListener = () => {
+  document
+    .querySelector("#register")
+    .addEventListener("submit", registerListener);
+  document.querySelector("#login").addEventListener("submit", loginListener);
+};
+
+const loginListener = (e) => {
+  e.preventDefault();
+  console.log("Login");
+  fetch("/api/users/login", {
+    method: "POST",
+    body: JSON.stringify({
+      username: e.target["0"].value,
+      password: e.target["1"].value,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          "Error code :" + response.status + " : " + response.statusText
+        );
+      }
+      return response.json();
+    })
+    .then((response) => {
+      if (response.token) {
+        localStorage.setItem("auth", response.token);
+        localStorage.setItem("username", response.username);
+        RedirectUrl("/");
+      }
+    })
+    .catch((err) => showError(err.message));
+};
+
+const registerListener = (e) => {
+  e.preventDefault();
+  fetch("/api/users/register", {
+    method: "POST",
+    body: JSON.stringify({
+      username: e.target["0"].value,
+      email: e.target["1"].value,
+      password: e.target["2"].value,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(
+          "Error code :" + response.status + " : " + response.statusText
+        );
+      return response.json();
+    })
+    .then((response) => {
+      if (response.token) {
+        localStorage.setItem("auth", response.token);
+        localStorage.setItem("username", response.username);
+        RedirectUrl("/");
+      }
+    })
+    .catch((err) => showError(err.message));
+};
+
+const showError = (message) => {
+  let element = document.querySelector("#error-message");
+  element.innerHTML = `<div class="error-message alert alert-danger" role="alert">${message}</div>`;
+  setTimeout(() => (element.innerHTML = ""), 5000);
 };
 
 export default ConnectionPage;

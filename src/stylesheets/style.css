@@ -42,6 +42,10 @@ body {
   background: #333333;
 }
 
+.navbar > div {
+  flex: 1;
+}
+
 .flex-around {
   display: flex;
   justify-content: space-around;
@@ -129,6 +133,21 @@ body {
   color: white;
 }
 
+.question {
+  position: absolute;
+  top: 8em;
+  height: 5em;
+  left: 30%;
+  width: 40%;
+  background: white;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1;
+}
+
 #main {
   flex: 1;
   background: #cac9c7;
@@ -142,7 +161,15 @@ body {
   cursor: pointer;
 }
 
+#logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 #mapid {
+  z-index: 0;
   flex: 1;
   width: 100%;
   background: #6facaa;
@@ -151,7 +178,7 @@ body {
 .homeTitle h1 {
   padding-top: 30px;
 }
-/* FORM LOGIN */
+
 .wrapper {
   display: flex;
   align-items: center;
@@ -194,9 +221,23 @@ body {
   color: red;
 }
 
+.points {
+  bottom: 5em;
+  right: 5em;
+  width: 6em;
+  height: 4em;
+  background: white;
+  position: absolute;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 input[type="button"],
 input[type="submit"],
-input[type="reset"] {
+input[type="reset"],
+button {
   background-color: #56baed;
   border: none;
   color: white;
@@ -220,13 +261,15 @@ input[type="reset"] {
 
 input[type="button"]:hover,
 input[type="submit"]:hover,
-input[type="reset"]:hover {
+input[type="reset"]:hover,
+button:hover {
   background-color: #39ace7;
 }
 
 input[type="button"]:active,
 input[type="submit"]:active,
-input[type="reset"]:active {
+input[type="reset"]:active,
+button:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -234,7 +277,9 @@ input[type="reset"]:active {
   transform: scale(0.95);
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -255,7 +300,9 @@ input[type="text"] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
@@ -263,6 +310,7 @@ input[type="text"]:focus {
 input[type="text"]:placeholder {
   color: #cccccc;
 }
+
 /* ScorePage*/
 #ScoreContent {
   -webkit-border-radius: 10px 10px 10px 10px;
@@ -291,26 +339,29 @@ input[type="text"]:placeholder {
   text-align: center;
 }
 
-#ScoreContent #yourScore .boutonRejouer{
+#ScoreContent #yourScore .boutonRejouer {
   margin-top: 30px;
 }
 
 /* navbar*/
 .fa-1x {
   font-size: 1.5rem;
-  }
-  .navbar-toggler.toggler-example {
+}
+.navbar-toggler.toggler-example {
   cursor: pointer;
-  }
-  .dark-blue-text {
-  color: #0A38F5;
-  }
-  .dark-pink-text {
-  color: #AC003A;
-  }
-  .dark-amber-text {
+}
+.dark-blue-text {
+  color: #0a38f5;
+}
+.dark-pink-text {
+  color: #ac003a;
+}
+.dark-amber-text {
   color: #ff6f00;
-  }
-  .dark-teal-text {
+}
+.dark-teal-text {
   color: #004d40;
-  }
+}
+.error-message {
+  width: 20em;
+}
