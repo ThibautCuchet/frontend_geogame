@@ -1,4 +1,4 @@
-import { setTitle } from "../utils/render.js";
+import { setNavSize, setTitle } from "../utils/render.js";
 import { RedirectUrl } from "./Router.js";
 
 let data;
@@ -104,6 +104,7 @@ const ScoreBoard = () => {
                     <strong></strong><br>
                     <div></div>
                     <button type="button" class="boutonRejouer">Play Again</button>
+                    <button type="button" class="boutonHome">Change gamemodes</button>
             </div>
         </div>
     </div>`;
@@ -111,6 +112,9 @@ const ScoreBoard = () => {
   element
     .querySelector(".boutonRejouer")
     .addEventListener("click", () => RedirectUrl("/map", data));
+  element
+    .querySelector(".boutonHome")
+    .addEventListener("click", () => RedirectUrl("/"));
   page.append(element);
 };
 
@@ -170,7 +174,6 @@ const Result = () => {
     })
     .then((response) => {
       let item = response[0];
-      console.log(response[0], item);
       if (item.index > 5) {
         let element = document.createElement("tr");
         element.className = "table-info";

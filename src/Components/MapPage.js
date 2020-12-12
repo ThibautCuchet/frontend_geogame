@@ -15,11 +15,11 @@ let mymap;
 let country;
 let geojson;
 
-const MapPage = async (_data) => {
+const MapPage = (_data) => {
   console.log("Map", _data);
   data = _data;
   page.innerHTML = mapPage;
-  setNavSize("6em");
+  setTimeout(() => setNavSize("6em"), 100);
   loadMap(data);
   setQuestionLayout();
   percent = 0;

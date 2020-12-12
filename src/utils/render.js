@@ -2,7 +2,7 @@ export const setImage = (src, id, style = "", callback = null) => {
   const img = new Image();
   img.src = src;
   img.style.cssText = style;
-  console.log(style, img.style);
+  document.getElementById(id).innerHTML = "";
   document.getElementById(id).append(img);
   if (callback) img.addEventListener("click", callback);
 };
@@ -34,5 +34,6 @@ export const showError = (message) => {
 };
 
 export const setNavSize = (size) => {
+  console.log(size);
   document.querySelector("#logo").querySelector("img").style.height = size;
 };

@@ -68,7 +68,6 @@ const HomePage = () => {
   page.innerHTML = "";
   WelcomeMessage();
   WorldSelection();
-  setNavSize("10em");
   checkLogged();
 };
 
@@ -154,6 +153,7 @@ const GamemodeSelection = (mapId) => {
   btn.style.alignSelf = "flex-end";
   btn.style.marginRight = "3em";
   btn.style.width = "6em";
+  btn.style.margin = "10px";
   btn.disabled = true;
   btn.id = "play-button";
   btn.addEventListener("click", () =>

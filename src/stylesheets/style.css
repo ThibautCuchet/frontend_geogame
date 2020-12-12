@@ -95,9 +95,10 @@ body {
   flex: 1;
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
+  padding-top: 10px;
 }
 
 .popup-boxes {
@@ -223,7 +224,7 @@ button {
   background-color: #56baed;
   border: none;
   color: white;
-  padding: 15px 80px;
+  padding: 15px 50px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -315,7 +316,7 @@ input[type="text"]:placeholder {
 
 #ScoreContent #yourScore {
   margin: auto;
-  width: 50%;
+  width: 100%;
   padding: 10px;
   padding-top: 50px;
   text-align: center;
@@ -327,4 +328,16 @@ input[type="text"]:placeholder {
 
 .error-message {
   width: 20em;
+}
+
+#logoutButton,
+#loginButton {
+  background: #cac9c7;
+  color: #333333;
+  margin: 0;
+}
+
+#logoutButton:hover,
+#loginButton:hover {
+  background: #afaeac;
 }

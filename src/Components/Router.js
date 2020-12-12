@@ -4,6 +4,8 @@ import MapPage from "./MapPage.js";
 import Connection from "./ConnectionPage.js";
 import Achievement from "./Achievement.js";
 import ScorePage from "./ScorePage.js";
+import Navbar from "./Navbar.js";
+import { setNavSize } from "../utils/render.js";
 
 const routes = {
   "/": HomePage,
@@ -31,31 +33,6 @@ const Router = () => {
     componentToRender();
   });
 
-  /* manage click on the navBar*/
-  const onNavigate = (e) => {
-    let uri;
-    if (e.target.tagName === "A") {
-      e.preventDefault();
-      // To get a data attribute through the dataset object, get the property by the part of the attribute name after data- (note that dashes are converted to camelCase).
-      uri = e.target.dataset.uri;
-    }
-    if (uri) {
-      // use Web History API to add current page URL to the user's navigation history & set right URL in the browser (instead of "#")
-      window.history.pushState({}, uri, window.location.origin + uri);
-      // render the requested component
-      // for the components that include JS, we want to assure that the JS included is not runned when the JS file is charged by the browser
-      // therefore, those components have to be either a function or a class
-      componentToRender = routes[uri];
-      if (routes[uri]) {
-        componentToRender();
-      } else {
-        ErrorPage(new Error("The " + uri + " ressource does not exist"));
-      }
-    }
-  };
-
-  navBar.addEventListener("click", onNavigate);
-
   // Display the right component when the user use the browsing history
   window.addEventListener("popstate", () => {
     componentToRender = routes[window.location.pathname];
@@ -76,6 +53,8 @@ const RedirectUrl = (uri, data) => {
   } else {
     ErrorPage(new Error("The " + uri + " ressource does not exist"));
   }
+  Navbar();
+  setNavSize("10em");
 };
 
 export { Router, RedirectUrl };

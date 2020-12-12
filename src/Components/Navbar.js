@@ -8,7 +8,7 @@ import { RedirectUrl } from "./Router";
 const Navbar = () => {
   //setImage(menu, "menu-hamburger");
   //setImage(portrait, "profile");
-  setImage(logo, "logo", "height: 10em; width: auto; margin-left: -3em", () =>
+  setImage(logo, "logo", "width: auto; margin-left: -3em", () =>
     RedirectUrl("/")
   );
   setImage(
@@ -16,6 +16,23 @@ const Navbar = () => {
     "menu-hamburger",
     "height: 2.5em; width: auto; margin-left: 3em"
   );
+  if (localStorage.getItem("auth")) {
+    document.querySelector(
+      "#profile"
+    ).innerHTML = `<button type="button" id="logoutButton">Logout</button>`;
+    document.querySelector("#logoutButton").addEventListener("click", () => {
+      localStorage.removeItem("auth");
+      localStorage.removeItem("username");
+      RedirectUrl("/connection");
+    });
+  } else {
+    document.querySelector(
+      "#profile"
+    ).innerHTML = `<button type="button" id="loginButton">Login / Register</button>`;
+    document.querySelector("#loginButton").addEventListener("click", () => {
+      RedirectUrl("/connection");
+    });
+  }
 };
 
 export default Navbar;

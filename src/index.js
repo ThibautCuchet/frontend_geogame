@@ -8,7 +8,9 @@ import "bootstrap/dist/css/bootstrap.css";
 /* load bootstrap module (JS) */
 import "bootstrap";
 import "./stylesheets/style.css";
+import { setNavSize } from "./utils/render.js";
 
 Navbar();
+setNavSize("10em");
 
 Router();
