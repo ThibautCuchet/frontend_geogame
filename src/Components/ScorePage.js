@@ -115,7 +115,7 @@ const ScoreBoard = () => {
 };
 
 const Result = () => {
-  fetch(`/api/scores/top/${data.map}`)
+  fetch(`/api/scores/top`)
     .then((response) => {
       if (!response.ok)
         throw new Error(response.status + " " + response.statusText);
@@ -124,7 +124,6 @@ const Result = () => {
     })
     .then((response) => {
       response.forEach((item, index) => {
-        console.log(item);
         let element = document.createElement("tr");
         if (item.username === localStorage.getItem("username"))
           element.className = "table-info";
@@ -141,14 +140,13 @@ const Result = () => {
       });
     });
 
-  fetch(`/api/scores/game/${data.map}/${localStorage.getItem("username")}`)
+  fetch(`/api/scores/game`)
     .then((response) => {
       if (!response.ok)
         throw new Error(response.status + " " + response.statusText);
       return response.json();
     })
     .then((response) => {
-      console.log(response);
       let resultScore = document.querySelector("#yourScore");
 
       resultScore.querySelector(
@@ -163,6 +161,30 @@ const Result = () => {
         (item) =>
           (document.getElementById(item).innerHTML = response.questions[item])
       );
+    });
+  fetch(`/api/scores/position`)
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(response.status + " " + response.statusText);
+      return response.json();
+    })
+    .then((response) => {
+      let item = response[0];
+      console.log(response[0], item);
+      if (item.index > 5) {
+        let element = document.createElement("tr");
+        element.className = "table-info";
+        element.innerHTML = `<td scope="row">
+                                <strong>${item.index}</strong>                
+                          </td>
+                          <td colspan="8">
+                                ${item.username}               
+                          </td>
+                          <td>
+                                ${item.score}             
+                          </td>`;
+        document.querySelector("#score-table").append(element);
+      }
     });
 };
 

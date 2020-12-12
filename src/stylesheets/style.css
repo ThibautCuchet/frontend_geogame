@@ -1,25 +1,7 @@
-@import url(//db.onlinewebfonts.com/c/61208c0ebb712f74e770dd3119d8955a?family=SF+Arch+Rival);
-
-@font-face {
-  font-family: "SF Arch Rival";
-  src: url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.eot");
-  src: url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.eot?#iefix")
-      format("embedded-opentype"),
-    url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.woff2")
-      format("woff2"),
-    url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.woff")
-      format("woff"),
-    url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.ttf")
-      format("truetype"),
-    url("//db.onlinewebfonts.com/t/61208c0ebb712f74e770dd3119d8955a.svg#SF Arch Rival")
-      format("svg");
-}
-
 * {
   margin: 0;
   padding: 0;
-  font-family: BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  user-select: none;
 }
 
 body {
@@ -44,6 +26,10 @@ body {
 
 .navbar > div {
   flex: 1;
+}
+
+.navbar img {
+  cursor: pointer;
 }
 
 .flex-around {
@@ -155,10 +141,6 @@ body {
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
-}
-
-#menu-hamburger {
-  cursor: pointer;
 }
 
 #logo {

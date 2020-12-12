@@ -106,7 +106,7 @@ const GamemodeSelection = (mapId) => {
   const element = document.createElement("div");
   element.className = "popup";
   element.innerHTML = `<div class="popup-content">
-    <div class="popup-title" style="display: flex; justify-content: center; align-items: center;"><strong>SELECT A GAMEMODE</strong></div>  
+    <div class="popup-title" style="display: flex; justify-content: center; align-items: center;"><strong>SELECT GAMEMODES (min 1)</strong></div>  
     <div class="popup-selection"></div>
   </div>`;
 
@@ -129,6 +129,13 @@ const GamemodeSelection = (mapId) => {
     modeDiv.querySelector(".popup-difficulty").style.background = gameColor(
       mode.difficulty
     );
+
+    modeDiv.addEventListener("click", () => {
+      modeDiv.querySelector(`#${mode.id}`).checked = !modeDiv.querySelector(
+        `#${mode.id}`
+      ).checked;
+      document.querySelector("#play-button").disabled = !isSwitches();
+    });
 
     modeDiv
       .querySelector(`#${mode.id}`)
