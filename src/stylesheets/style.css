@@ -1,3 +1,15 @@
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: white;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #333333;
+  border-radius: 5px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -73,7 +85,7 @@ body {
 
 .popup-content {
   width: 33%;
-  height: 60%;
+  height: 80%;
   border-radius: 10px;
   background: #cac9c7;
   display: flex;
@@ -83,12 +95,22 @@ body {
   overflow: hidden;
 }
 
+@media screen and (max-width: 800) {
+  .popup-content {
+    width: 50%;
+  }
+}
+
 .popup-title {
-  flex: 0 3em;
+  flex: 0 4em;
   width: 100%;
   background: #333333;
   text-align: center;
   color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .popup-selection {
@@ -340,4 +362,43 @@ input[type="text"]:placeholder {
 #logoutButton:hover,
 #loginButton:hover {
   background: #afaeac;
+}
+
+.navmodal {
+  position: absolute;
+  background: #cac9c7;
+  border-radius: 0 5px 5px 5px;
+  padding: 1em;
+  box-shadow: #0d0d0d 0px 5px 5px;
+}
+
+.navmodal > div {
+  height: 2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.leaderboard {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+  overflow-y: scroll;
+  text-align: center;
+}
+
+#Leaderboard {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  position: relative;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  display: flex;
+  border: solid 3px lightgrey;
+  height: 650px;
+  width: 90%;
+  overflow: hidden;
 }

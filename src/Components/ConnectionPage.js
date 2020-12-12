@@ -35,7 +35,7 @@ const CreateFormConnection = () => {
     </form>
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+      <a class="underlineHover" href="#" id="forgot">Forgot Password?</a>
     </div>
     </div>
     
@@ -60,6 +60,10 @@ const CreateFormConnection = () => {
   page.append(element);
   page.append(document.createElement("div"));
   setFormListener();
+  document.querySelector("#forgot").addEventListener("click", (e) => {
+    e.preventDefault();
+    showError("Cheh !");
+  });
 };
 
 const setFormListener = () => {

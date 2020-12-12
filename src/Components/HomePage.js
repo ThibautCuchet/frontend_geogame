@@ -105,7 +105,7 @@ const GamemodeSelection = (mapId) => {
   const element = document.createElement("div");
   element.className = "popup";
   element.innerHTML = `<div class="popup-content">
-    <div class="popup-title" style="display: flex; justify-content: center; align-items: center;"><strong>SELECT GAMEMODES (min 1)</strong></div>  
+    <div class="popup-title"><strong>SELECT GAMEMODES</strong>Select at least one choice</div>  
     <div class="popup-selection"></div>
   </div>`;
 
@@ -150,9 +150,9 @@ const GamemodeSelection = (mapId) => {
   btn.type = "button";
   btn.className = "btn btn-dark";
   btn.innerHTML = "Play";
-  btn.style.alignSelf = "flex-end";
+  //btn.style.alignSelf = "flex-end";
   btn.style.marginRight = "3em";
-  btn.style.width = "6em";
+  btn.style.width = "50%";
   btn.style.margin = "10px";
   btn.disabled = true;
   btn.id = "play-button";

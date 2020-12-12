@@ -178,6 +178,8 @@ const successAnswer = () => {
     duration: 500,
     iterations: 3,
   });
+  colorLayout("green");
+  setTimeout(() => colorLayout("#e0cda9"), 2000);
 };
 
 const wrongAnswer = () => {

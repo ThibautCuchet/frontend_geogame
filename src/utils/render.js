@@ -34,6 +34,5 @@ export const showError = (message) => {
 };
 
 export const setNavSize = (size) => {
-  console.log(size);
   document.querySelector("#logo").querySelector("img").style.height = size;
 };

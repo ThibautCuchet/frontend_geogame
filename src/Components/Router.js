@@ -2,17 +2,19 @@ import HomePage from "./HomePage.js";
 import ErrorPage from "./ErrorPage.js";
 import MapPage from "./MapPage.js";
 import Connection from "./ConnectionPage.js";
-import Achievement from "./Achievement.js";
 import ScorePage from "./ScorePage.js";
+import LeaderboardPage from "./LeaderboardPage.js";
 import Navbar from "./Navbar.js";
 import { setNavSize } from "../utils/render.js";
+import AboutPage from "./AboutPage.js";
 
 const routes = {
   "/": HomePage,
   "/map": MapPage,
   "/connection": Connection,
-  "/achievement": Achievement,
   "/scores": ScorePage,
+  "/leaderboard": LeaderboardPage,
+  "/about": AboutPage,
 };
 
 let navBar = document.querySelector("#navBar");

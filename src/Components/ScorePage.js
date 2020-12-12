@@ -30,29 +30,8 @@ const ScoreBoard = () => {
   element.style.width = "65%";
   element.innerHTML = `
       <div id="ScoreContent">
-        <div style="display: flex; flex-direction: column; flex: 1; padding:20px">
-            <h4> SCOREBOARD </h4>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">
-                                                #                  
-                        </th>
-                        <th scope="col" colspan="8">
-                                                Pseudo                  
-                        </th>
-                        <th scope="col">
-                                                Points                  
-                        </th>
-                    </tr>
-                </thead>
-                <tbody id="score-table">
-                </tbody>
-            </table>
-        </div>
-        <div style="width: 5px; background: #D3D3D3"></div>
-        <!-- RESULT -->
-        <div style="display: flex; flex-direction: column; flex: 1; padding:20px">
+      <!-- RESULT -->
+      <div style="display: flex; flex-direction: column; flex: 1; padding:20px">
             <h4> RESULT OF THE GAME </h4>
             <table class="table">
                 <thead class="thead-dark">
@@ -107,6 +86,30 @@ const ScoreBoard = () => {
                     <button type="button" class="boutonHome">Change gamemodes</button>
             </div>
         </div>
+        <div style="width: 5px; background: #D3D3D3"></div>
+        
+        <div style="display: flex; flex-direction: column; flex: 1; padding:20px">
+            <h4> SCOREBOARD </h4>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">
+                                                #                  
+                        </th>
+                        <th scope="col" colspan="8">
+                                                Pseudo                  
+                        </th>
+                        <th scope="col">
+                                                Points                  
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="score-table">
+                </tbody>
+            </table>
+        </div>
+        
+        
     </div>`;
   element.style.fontSize = "20px";
   element
