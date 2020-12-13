@@ -2,7 +2,7 @@ import { Button } from "bootstrap";
 import { setNavSize, setTitle, showError } from "../utils/render.js";
 import { RedirectUrl } from "./Router.js";
 
-let logged = true;
+let logged = null;
 
 const worldParts = [
   {
@@ -104,9 +104,9 @@ const WorldSelection = () => {
 };
 
 const GamemodeSelection = (mapId) => {
-  if (!logged) {
+  if (logged != true) {
     RedirectUrl("/connection");
-    showError("You are not authentified !");
+    showError(logged);
   }
   const element = document.createElement("div");
   element.className = "popup";
@@ -237,7 +237,7 @@ const checkLogged = async () => {
       });
     })
     .catch((error) => {
-      logged = false;
+      logged = error;
     });
 };
 
