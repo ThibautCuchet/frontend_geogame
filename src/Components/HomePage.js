@@ -107,6 +107,7 @@ const GamemodeSelection = (mapId) => {
   if (logged != true) {
     RedirectUrl("/connection");
     showError(logged);
+    return;
   }
   const element = document.createElement("div");
   element.className = "popup";
