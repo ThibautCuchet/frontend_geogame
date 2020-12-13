@@ -2,6 +2,8 @@ import { Button } from "bootstrap";
 import { setNavSize, setTitle, showError } from "../utils/render.js";
 import { RedirectUrl } from "./Router.js";
 
+let logged = true;
+
 const worldParts = [
   {
     id: "world",
@@ -102,6 +104,10 @@ const WorldSelection = () => {
 };
 
 const GamemodeSelection = (mapId) => {
+  if (!logged) {
+    RedirectUrl("/connection");
+    showError("You are not authentified !");
+  }
   const element = document.createElement("div");
   element.className = "popup";
   element.innerHTML = `<div class="popup-content">
@@ -213,7 +219,7 @@ const isSwitches = () => {
   return Object.keys(switches).some((item) => switches[item]);
 };
 
-const checkLogged = () => {
+const checkLogged = async () => {
   fetch("/api/users/islogged", {
     method: "GET",
     headers: {
@@ -222,14 +228,16 @@ const checkLogged = () => {
     },
   })
     .then((response) => {
-      if (response.ok) return;
+      if (response.ok) {
+        logged = true;
+        return;
+      }
       return response.text().then((text) => {
         throw new Error(text);
       });
     })
     .catch((error) => {
-      RedirectUrl("/connection");
-      showError(error);
+      logged = false;
     });
 };
 
